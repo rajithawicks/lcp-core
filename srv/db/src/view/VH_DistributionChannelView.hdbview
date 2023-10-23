@@ -1,8 +1,0 @@
-VIEW "VH.DistributionChannelView"(
-	"Code",
-	"Text") AS
-		SELECT 
-			"CD_DISTRIBUTION_CHANNEL_$0"."DistributionChannelId" AS "Code",
-			"CD_DISTRIBUTION_CHANNEL_$0"."DistributionChannel" AS "Text"
-		FROM "CD_DISTRIBUTION_CHANNEL"() AS "CD_DISTRIBUTION_CHANNEL_$0"
-WITH READ ONLY;

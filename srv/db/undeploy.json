@@ -1,8 +1,0 @@
-[
-  "src/gen/**/*.hdbview",
-  "src/gen/**/*.hdbindex",
-  "src/gen/**/*.hdbconstraint",
-  "src/gen/*.hdbcds",
-  "src/procedures/RENAME_HDBCDS_TO_PLAIN.hdbprocedure",
-  "src/data/loads/MessageClassText.csv"
-]

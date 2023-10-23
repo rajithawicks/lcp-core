@@ -1,9 +1,0 @@
-VIEW "IV.DistributionChannelView"(
-	"DistributionChannelId",
-	"DistributionChannel") AS
-		SELECT DISTINCT 
-			"DistributionChannel_$0"."DistributionChannelId" AS "DistributionChannelId",
-			"DistributionChannel_$0"."DistributionChannel" AS "DistributionChannel"
-		FROM "DistributionChannel" AS "DistributionChannel_$0"
-		WHERE ( "DistributionChannel_$0"."SAPClient" = '100' )
-WITH READ ONLY;

@@ -1,8 +1,0 @@
-VIEW "VH.SalesOrganizationView"(
-	"Code",
-	"Text") AS
-		SELECT 
-			"CD_SALES_ORGANIZATION_$0"."SalesOrganizationId" AS "Code",
-			"CD_SALES_ORGANIZATION_$0"."SalesOrganization" AS "Text"
-		FROM "CD_SALES_ORGANIZATION"() AS "CD_SALES_ORGANIZATION_$0"
-WITH READ ONLY;

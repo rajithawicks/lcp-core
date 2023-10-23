@@ -1,9 +1,0 @@
-VIEW "IV.SalesOrganizationView"(
-	"SalesOrganizationId",
-	"SalesOrganization") AS
-		SELECT DISTINCT 
-			"SalesOrganization_$0"."SalesOrganizationId" AS "SalesOrganizationId",
-			"SalesOrganization_$0"."SalesOrganization" AS "SalesOrganization"
-		FROM "SalesOrganization" AS "SalesOrganization_$0"
-		WHERE ( "SalesOrganization_$0"."SAPClient" = '100' )
-WITH READ ONLY;
