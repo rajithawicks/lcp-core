@@ -1,0 +1,14 @@
+VIEW "IV.MerchandiseCategoryHierarchyView"(
+	"MaterialGroupId",
+	"MaterialGroupHierNode2Text",
+	"MaterialGroupHierNode2Name",
+	"MaterialGroupHierNode3Text",
+	"MaterialGroupHierNode3Name") AS
+		SELECT 
+			"MerchandiseCategoryHierarchy_$0"."MaterialGroupId" AS "MaterialGroupId",
+			"MerchandiseCategoryHierarchy_$0"."MaterialGroupHierNode2Text" AS "MaterialGroupHierNode2Text",
+			"MerchandiseCategoryHierarchy_$0"."MaterialGroupHierNode2Name" AS "MaterialGroupHierNode2Name",
+			"MerchandiseCategoryHierarchy_$0"."MaterialGroupHierNode3Text" AS "MaterialGroupHierNode3Text",
+			"MerchandiseCategoryHierarchy_$0"."MaterialGroupHierNode3Name" AS "MaterialGroupHierNode3Name"
+		FROM "MerchandiseCategoryHierarchy" AS "MerchandiseCategoryHierarchy_$0"
+		WHERE ( "MerchandiseCategoryHierarchy_$0"."SAPClient" = '100' );

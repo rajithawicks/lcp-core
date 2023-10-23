@@ -1,0 +1,103 @@
+PROCEDURE "VALIDATE_EVENT_RULE_DIMENSION"(
+	IN	IV_ACTIVITYTYPE nvarchar(6),
+	IN	IV_RULECONDITIONUUID nvarchar(32),
+	IN  IV_DIMENSIONID nvarchar(3),
+	IN  IV_DIMENSIONVALUE nvarchar(20),
+	OUT ET_RETURN "TT_RETURN_MESSAGE"	
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   --DEFAULT SCHEMA <default_schema_name>
+   --READS SQL DATA AS
+   AS
+BEGIN
+   /*************************************
+       Write your procedure logic 
+   *************************************/
+	USING "UTILITY" AS util;
+	USING "MESSAGEUTILITY" AS message; 
+	USING "C_MESSAGE_TYPE" AS messageType;
+	USING "C_ACTIVITY_TYPE" AS activityType;
+	
+	declare sMessage string;
+	declare checkFlag boolean = true;
+	declare doExist boolean = true;
+	declare IT_CHECK_CRITERIA table (
+   					COLUMN_VALUE nvarchar(50),
+   					COLUMN_NAME nvarchar(50)
+   				);
+
+	-- check for mandatory fields : RULECONDITIONUUID (UUID generated from frontend call to function import)
+    if( :IV_RULECONDITIONUUID is null OR :IV_RULECONDITIONUUID = '') then
+		call message:"get_message"('','','029', '', '', '', '', :sMessage);
+		:ET_RETURN.insert((messageType:error, :sMessage));
+		checkFlag = false;
+	else
+	    -- check existence of RULECONDITIONUUID if not empty
+		:IT_CHECK_CRITERIA.delete();
+		:IT_CHECK_CRITERIA.insert((:IV_RULECONDITIONUUID,'RULECONDITIONUUID'), 1);
+	    CALL util:"check_data_exists"('PR_RULECONDITION',:IT_CHECK_CRITERIA,:doExist); 
+	    if ( :doExist = false ) then
+	    	-- Rule Condition record does not exist message
+	    	call message:"get_message"('', '', '030', :IV_RULECONDITIONUUID, '', '', '', :sMessage);
+	    	:ET_RETURN.insert((messageType:error, :sMessage));
+	    	checkFlag = false;
+	    end if;			
+	end if;
+
+	-- check for mandatory fields : DIMENSIONID
+    if( :IV_DIMENSIONID is null OR :IV_DIMENSIONID = '') then
+		call message:"get_message"('','','031', '', '', '', '', :sMessage);
+		:ET_RETURN.insert((messageType:error, :sMessage));
+		checkFlag = false;
+	else
+	    -- check existence of DIMENSIONID if not empty
+		:IT_CHECK_CRITERIA.delete();
+		:IT_CHECK_CRITERIA.insert((:IV_DIMENSIONID,'DIMENSIONID'), 1);
+	    CALL util:"check_data_exists"('PR_DIMENSIONTEXT',:IT_CHECK_CRITERIA,:doExist); 
+	    if ( :doExist = false ) then
+	    	-- Dimension record does not exist message
+	    	call message:"get_message"('', '', '032', :IV_DIMENSIONID, '', '', '', :sMessage);
+	    	:ET_RETURN.insert((messageType:error, :sMessage));
+	    	checkFlag = false;
+	    end if;			
+	end if;
+	
+	-- check for mandatory fields : DIMENSIONVALUE
+    if( :IV_DIMENSIONVALUE is null OR :IV_DIMENSIONVALUE = '') then
+		call message:"get_message"('','','039', '', '', '', '', :sMessage);
+		:ET_RETURN.insert((messageType:error, :sMessage));
+		checkFlag = false;	
+	end if;
+	
+    -- For RULECONDITIONUUID, DIMENSIONID & DIMENSIONVALUE key fields combination shall exist in table			
+   	if ( RECORD_COUNT(:ET_RETURN) < 1 ) then
+   	
+	    -- check existence of EVENTRULECONDITIONUUID & RULECONDITIONUUID if not empty
+		:IT_CHECK_CRITERIA.delete();
+		:IT_CHECK_CRITERIA.insert((:IV_RULECONDITIONUUID,'RULECONDITIONUUID'), 1);
+	    :IT_CHECK_CRITERIA.insert((:IV_DIMENSIONID,'DIMENSIONID'), 1);
+	    :IT_CHECK_CRITERIA.insert((:IV_DIMENSIONVALUE,'DIMENSIONVALUE'), 1);
+	    CALL util:"check_data_exists"('PR_EVENTRULEDIMENSION',:IT_CHECK_CRITERIA,:doExist);   
+	    
+	    -- For create, do not enter  record that had already exist
+   		if ( :IV_ACTIVITYTYPE = activityType:create ) then
+		    if ( :doExist = true ) then
+		    	-- Event Rule Dimension record already exist message
+		    	call message:"get_message"('', '', '041', :IV_RULECONDITIONUUID, :IV_DIMENSIONID, :IV_DIMENSIONVALUE, '', :sMessage);
+		    	:ET_RETURN.insert((messageType:error, :sMessage));
+		    	checkFlag = false;
+		    end if;	
+		    
+		-- For delete, raise error when entry not found
+		elseif ( :IV_ACTIVITYTYPE = activityType:delete ) then
+		    if ( :doExist = false ) then
+		    	-- Event Rule Dimension record does not exist message
+		    	call message:"get_message"('', '', '040', :IV_RULECONDITIONUUID, :IV_DIMENSIONID, :IV_DIMENSIONVALUE, '', :sMessage);
+		    	:ET_RETURN.insert((messageType:error, :sMessage));
+		    	checkFlag = false;
+		    end if;			
+		end if;   	
+   	end if;
+   	
+END

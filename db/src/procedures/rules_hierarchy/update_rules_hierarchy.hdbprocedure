@@ -1,0 +1,70 @@
+PROCEDURE "UPDATE_RULES_HIERARCHY"(
+	IN	IV_PRIORITY string,
+	IN  IV_RULEID string,
+	OUT ET_RETURN "TT_RETURN_MESSAGE"
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   --DEFAULT SCHEMA <default_schema_name>
+   --READS SQL DATA 
+   AS
+BEGIN
+   /*************************************
+       Write your procedure logic 
+   *************************************/
+   USING "UTILITY" AS util;
+   USING "MESSAGEUTILITY" AS message; 
+   USING "C_MESSAGE_TYPE" AS messageType;
+	
+	declare sMessage string;
+	declare checkFlag boolean = true;
+	declare doExist boolean = true;
+	declare IT_CHECK_CRITERIA table (
+   					COLUMN_VALUE nvarchar(50),
+   					COLUMN_NAME nvarchar(50)
+   				);
+   				
+    DECLARE ls_rules_hierarchy ROW LIKE "PR_PRICINGRULE";
+   
+    SELECT * INTO ls_rules_hierarchy
+    FROM "PR_PRICINGRULE"
+    WHERE RULEID = :IV_RULEID;
+    
+	-- check for mandatory fields : RULEID
+    if( :IV_RULEID is null OR :IV_RULEID = '') then
+		call message:"get_message"('','','010', '', '', '', '', :sMessage);
+		:ET_RETURN.insert((messageType:error, :sMessage));
+		checkFlag = false;
+	else
+	    -- check existence of RULEID if not empty
+		:IT_CHECK_CRITERIA.delete();
+	    :IT_CHECK_CRITERIA.insert((:IV_RULEID,'RULEID'), 1);
+	    call util:"check_data_exists"('PR_PRICINGRULE',:IT_CHECK_CRITERIA,:doExist);
+	    if ( :doExist = false OR :ls_rules_hierarchy.PRIORITY = -1 ) then
+	    	CALL message:"get_message"('', '', '007', :IV_RULEID, '', '', '', :sMessage);
+	    	:ET_RETURN.insert((messageType:error, :sMessage));
+	    	checkFlag = false;
+	    end if;	
+	end if;
+	
+		-- check for mandatory fields : PRIORITY
+    if( :IV_PRIORITY is null OR :IV_PRIORITY = '') then
+		call message:"get_message"('','','013', '', '', '', '', :sMessage);
+		:ET_RETURN.insert((messageType:error, :sMessage));
+		checkFlag = false;
+	else
+		:IT_CHECK_CRITERIA.delete();
+	    :IT_CHECK_CRITERIA.insert((:IV_PRIORITY,'PRIORITY'), 1);
+	    call util:"check_data_exists"('PR_PRICINGRULE',:IT_CHECK_CRITERIA,:doExist);
+	    if(:doExist = true) then
+		    CALL message:"get_message"('', '', '005', :IV_PRIORITY, '', '', '', :sMessage);
+	    	:ET_RETURN.insert((messageType:error, :sMessage));
+	    	checkFlag = false;
+	    end if;
+	end if;
+	
+	IF(checkFlag = true) THEN
+		UPDATE "PR_PRICINGRULE" SET PRIORITY = :IV_PRIORITY WHERE RULEID = :IV_RULEID;
+		COMMIT;
+	END IF;
+END

@@ -1,0 +1,20 @@
+FUNCTION "GET_DIMENSIONS"( )
+       RETURNS table (
+    		RULECONDITIONUUID NVARCHAR(32),
+       		DIMENSIONID NVARCHAR(3),
+       		DIMENSIONVALUE NVARCHAR(5000)
+       ) 
+       LANGUAGE SQLSCRIPT 
+       SQL SECURITY INVOKER AS 
+BEGIN 
+    /*****************************
+        Write your function logic
+    ****************************/
+    
+	RETURN  SELECT	RULECONDITIONUUID,
+    				DIMENSIONID,
+    	 STRING_AGG(DIMENSIONVALUE,',') AS DIMENSIONVALUE
+    		  FROM "PR_EVENTRULEDIMENSION"
+    	   GROUP BY RULECONDITIONUUID, 
+    				DIMENSIONID;
+END;

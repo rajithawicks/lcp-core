@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CD_LOCATION" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<descriptions defaultDescription="CD_LOCATION"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="RetailLocation">
+    <resourceUri>RetailLocation</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="RetailLocation" filterExpressionLanguage="COLUMN_ENGINE">
+  <attributes>
+    <attribute id="SAPClient" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SAPClient"/>
+      <keyMapping columnObjectName="RetailLocation" columnName="SAPClient"/>
+    </attribute>
+    <attribute id="LocationId" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LocationId"/>
+      <keyMapping columnObjectName="RetailLocation" columnName="LocationId"/>
+    </attribute>
+    <attribute id="Location" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Location"/>
+      <keyMapping columnObjectName="RetailLocation" columnName="Location"/>
+    </attribute>
+    <attribute id="City" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="City"/>
+      <keyMapping columnObjectName="RetailLocation" columnName="City"/>
+    </attribute>
+    <attribute id="RegionId" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RegionId"/>
+      <keyMapping columnObjectName="RetailLocation" columnName="RegionId"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+
+  <filter>&quot;SAPClient&quot; = '100'</filter>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

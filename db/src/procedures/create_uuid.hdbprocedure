@@ -1,0 +1,16 @@
+PROCEDURE "CREATE_UUID"(
+	OUT EV_UUID nvarchar(32)
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   --DEFAULT SCHEMA <default_schema_name>
+   --READS SQL DATA AS
+   AS
+BEGIN
+   /*************************************
+       Write your procedure logic 
+    *************************************/
+	
+    -- new UUID
+	EXEC 'SELECT NEWUID() FROM DUMMY' INTO EV_UUID;
+END

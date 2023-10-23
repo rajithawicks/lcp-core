@@ -1,0 +1,14 @@
+VIEW "IV.MaterialSaleDateView"(
+	"MaterialId",
+	"SalesOrganizationId",
+	"DistributionChannelId",
+	"EarliestSaleDate",
+	"LatestSaleDate") AS
+		SELECT 
+			"MaterialSaleDate_$0"."MaterialId" AS "MaterialId",
+			"MaterialSaleDate_$0"."SalesOrganizationId" AS "SalesOrganizationId",
+			"MaterialSaleDate_$0"."DistributionChannelId" AS "DistributionChannelId",
+			"MaterialSaleDate_$0"."EarliestSaleDate" AS "EarliestSaleDate",
+			"MaterialSaleDate_$0"."LatestSaleDate" AS "LatestSaleDate"
+		FROM "MaterialSaleDate" AS "MaterialSaleDate_$0"
+		WHERE ( "MaterialSaleDate_$0"."SAPClient" = '100' );

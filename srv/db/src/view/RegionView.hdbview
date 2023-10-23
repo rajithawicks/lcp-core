@@ -1,0 +1,10 @@
+VIEW "IV.RegionView"(
+	"RegionId",
+	"Region") AS
+		SELECT DISTINCT 
+			"Region_$0"."RegionId" AS "RegionId",
+			"Region_$0"."Region" AS "Region"
+		FROM "Region" AS "Region_$0"
+		WHERE (( "Region_$0"."SAPClient" = '100' )
+			AND ( "Region_$0"."CountryId" = 'US' ))
+WITH READ ONLY;

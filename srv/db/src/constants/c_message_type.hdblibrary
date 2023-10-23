@@ -1,0 +1,11 @@
+LIBRARY "C_MESSAGE_TYPE"
+  LANGUAGE SQLSCRIPT AS
+ BEGIN 
+ 
+   public variable error constant nvarchar(12) = 'Error'; 
+   public variable abend constant nvarchar(12) = 'Abend'; 
+   public variable warning constant nvarchar(12) = 'Warning'; 
+   public variable information constant nvarchar(12) = 'Information'; 
+   public variable success constant nvarchar(12) = 'Success'; 
+   
+END;

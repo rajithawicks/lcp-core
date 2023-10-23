@@ -1,0 +1,101 @@
+PROCEDURE "UPDATE_MESSAGE_TYPE_MAINTENANCE"( 
+	IN	IV_MESSAGETYPEUUID nvarchar(32),
+	IN  IV_RULEID nvarchar(4),
+	IN  IV_EVENTTYPEID nvarchar(3),
+	IN	IV_VALIDFROM date,
+	IN	IV_VALIDTO date,
+	IN	IV_MESSAGETYPEID nvarchar(10),
+	OUT ET_RETURN "TT_RETURN_MESSAGE"
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   --DEFAULT SCHEMA <default_schema_name>
+   AS
+BEGIN
+   /*************************************
+       This procedure validate and update 
+       data of message type maintenance 
+   *************************************/
+	using "MESSAGEUTILITY" as message;
+	using "C_MESSAGE_TYPE" as messageType;
+	
+    declare sMessage string;
+	declare lv_count integer;
+	declare lv_validfrom string;
+	declare lv_validto string;
+	declare i integer;
+	declare checkFlag boolean = true;
+	declare vCurrentDate date = null;
+	declare vOldValidFrom date = null;
+	declare vSqlString string;
+
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+	BEGIN
+		call message:"get_message"('','','014','UPDATE_MESSAGE_TYPE_MAINTENANCE','','','',:sMessage);
+		:ET_RETURN.insert((messageType:error, :sMessage));
+	END;	
+
+	-- MessageTypeUuid, RuleID, EventTypeID & MessageTypeIDs are mandatory to check existence of overlapping validity based on the combination 
+	if (:IV_MESSAGETYPEUUID = '' OR :IV_MESSAGETYPEUUID = null OR :IV_RULEID = '' OR :IV_RULEID = null OR :IV_EVENTTYPEID = '' OR :IV_EVENTTYPEID = null 
+		OR :IV_VALIDFROM = null OR :IV_VALIDTO = null OR :IV_MESSAGETYPEID = '' OR :IV_MESSAGETYPEID = null) then
+		CALL message:"get_message"('','','017','','','','',:sMessage);
+		:ET_RETURN.insert((messageType:error, :sMessage));
+		checkFlag = false;
+	else
+		-- ValidFrom date cannot be earlier than initially set date during CREATE
+		vSqlString = 'SELECT VALIDFROM FROM "PR_MESSAGETYPEMAINTENANCE" WHERE MESSAGETYPEUUID = '''|| :IV_MESSAGETYPEUUID || '''';
+		EXEC vSqlString INTO vOldValidFrom;
+		if vOldValidFrom is not null then
+			if ( :IV_VALIDFROM < :vOldValidFrom ) then
+				CALL message:"get_message"('','','046','','','','',:sMessage);
+				:ET_RETURN.insert((messageType:error, :sMessage));			
+				checkFlag = false;
+			end if;
+		end if;
+		
+		-- Get all combination of message type maintenance based on input for complete ranges of validity
+		if (:checkFlag = true) then
+			IT_MESSAGETYPEMAINTENANCE = 
+				SELECT "MESSAGETYPEUUID", "VALIDFROM", "VALIDTO"
+				FROM "PR_MESSAGETYPEMAINTENANCE"
+				WHERE "RULEID" = :IV_RULEID AND "EVENTTYPEID" = :IV_EVENTTYPEID AND "MESSAGETYPEID" = :IV_MESSAGETYPEID;
+			for i in 1..RECORD_COUNT(:IT_MESSAGETYPEMAINTENANCE) do
+				if (:checkFlag = true) then
+					-- existing record for update to be excluded from validation on overlapping
+					if :IT_MESSAGETYPEMAINTENANCE.MESSAGETYPEUUID[i] != :IV_MESSAGETYPEUUID then
+						if (:IT_MESSAGETYPEMAINTENANCE.VALIDFROM[i] < :IV_VALIDFROM AND :IT_MESSAGETYPEMAINTENANCE.VALIDTO[i] > :IV_VALIDTO) OR 
+						   (:IT_MESSAGETYPEMAINTENANCE.VALIDFROM[i] > :IV_VALIDFROM AND :IT_MESSAGETYPEMAINTENANCE.VALIDTO[i] < :IV_VALIDTO) OR 
+						   (:IT_MESSAGETYPEMAINTENANCE.VALIDFROM[i] <= :IV_VALIDFROM AND :IT_MESSAGETYPEMAINTENANCE.VALIDTO[i] >= :IV_VALIDFROM) OR 
+						   (:IT_MESSAGETYPEMAINTENANCE.VALIDFROM[i] <= :IV_VALIDTO AND :IT_MESSAGETYPEMAINTENANCE.VALIDTO[i] >= :IV_VALIDTO) then
+						   
+						    -- if overlapping entry exist, raise error
+							lv_validfrom = :IT_MESSAGETYPEMAINTENANCE.VALIDFROM[i];
+							lv_validto = :IT_MESSAGETYPEMAINTENANCE.VALIDTO[i];
+							
+					    	CALL message:"get_message"('','','015',:IV_RULEID,:IV_EVENTTYPEID,:lv_validfrom,:lv_validto,:sMessage);
+					    	:ET_RETURN.insert((messageType:error, :sMessage));
+					    	checkFlag = false;
+					    end if;
+					end if;
+				end if;
+			end for;
+		end if;
+	end if;	
+
+   	SELECT count(*) INTO lv_count FROM :ET_RETURN;
+   	
+   	if(:lv_count = 0) then
+		-- Update Message Type Maintenance
+		UPDATE "PR_MESSAGETYPEMAINTENANCE" 
+		SET
+			"RULEID" = :IV_RULEID, 
+			"EVENTTYPEID" = :IV_EVENTTYPEID, 
+			"VALIDFROM" = :IV_VALIDFROM, 
+			"VALIDTO" = :IV_VALIDTO,
+			"MESSAGETYPEID" = :IV_MESSAGETYPEID
+		WHERE
+			"MESSAGETYPEUUID" = :IV_MESSAGETYPEUUID;
+		
+		commit;
+	end if;   	
+END

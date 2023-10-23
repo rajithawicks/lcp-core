@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CD_DIMENSION" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<descriptions defaultDescription="CD_DIMENSION"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="CD_PRODUCT">
+    <resourceUri>CD_PRODUCT</resourceUri>
+  </DataSource>
+  <DataSource id="CD_PRODUCT_GROUP">
+    <resourceUri>CD_PRODUCT_GROUP</resourceUri>
+  </DataSource>
+  <DataSource id="CD_MERCHANDISE_HIERARCHY">
+    <resourceUri>CD_MERCHANDISE_HIERARCHY</resourceUri>
+  </DataSource>
+  <DataSource id="CD_PRODUCT_HIERARCHY">
+    <resourceUri>CD_PRODUCT_HIERARCHY</resourceUri>
+  </DataSource>
+  <DataSource id="CD_LOCATION">
+    <resourceUri>CD_LOCATION</resourceUri>
+  </DataSource>
+  <DataSource id="CD_LOCATION_GROUP">
+    <resourceUri>CD_LOCATION_GROUP</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Product">
+    <viewAttributes>
+      <viewAttribute id="Code"/>
+      <viewAttribute id="Text"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="Dimension" datatype="NVARCHAR" length="3" expressionLanguage="SQL">
+        <formula>'002'</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="CD_PRODUCT">
+      <mapping xsi:type="Calculation:AttributeMapping" target="Code" source="MaterialId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Text" source="Material"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="ProductGroup">
+    <viewAttributes>
+      <viewAttribute id="Code"/>
+      <viewAttribute id="Text"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="Dimension" datatype="NVARCHAR" length="3" expressionLanguage="SQL">
+        <formula>'003'</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="CD_PRODUCT_GROUP">
+      <mapping xsi:type="Calculation:AttributeMapping" target="Code" source="MaterialGroupId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Text" source="MaterialGroup"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:UnionView" id="Union_1">
+    <viewAttributes>
+      <viewAttribute id="Dimension"/>
+      <viewAttribute id="Code"/>
+      <viewAttribute id="Text"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Product">
+      <mapping xsi:type="Calculation:AttributeMapping" target="Dimension" source="Dimension"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Code" source="Code"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Text" source="Text"/>
+    </input>
+    <input node="ProductGroup">
+      <mapping xsi:type="Calculation:AttributeMapping" target="Dimension" source="Dimension"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Code" source="Code"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Text" source="Text"/>
+    </input>
+    <input node="MerchandiseHierarchy">
+      <mapping xsi:type="Calculation:AttributeMapping" target="Dimension" source="Dimension"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Text" source="Text"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Code" source="Code"/>
+    </input>
+    <input node="ProductHierarchy">
+      <mapping xsi:type="Calculation:AttributeMapping" target="Dimension" source="Dimension"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Code" source="Code"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Text" source="Text"/>
+    </input>
+    <input node="Location">
+      <mapping xsi:type="Calculation:AttributeMapping" target="Dimension" source="Dimension"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Code" source="Code"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Text" source="Text"/>
+    </input>
+    <input node="LocationGroup">
+      <mapping xsi:type="Calculation:AttributeMapping" target="Dimension" source="Dimension"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Code" source="Code"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Text" source="Text"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="MerchandiseHierarchy">
+    <viewAttributes>
+      <viewAttribute id="Code"/>
+      <viewAttribute id="Text"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="Dimension" datatype="NVARCHAR" length="3" expressionLanguage="SQL">
+        <formula>'005'</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="CD_MERCHANDISE_HIERARCHY">
+      <mapping xsi:type="Calculation:AttributeMapping" target="Code" source="ProductHierarchyNodeId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Text" source="ProductHierarchyNode"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="ProductHierarchy">
+    <viewAttributes>
+      <viewAttribute id="Code"/>
+      <viewAttribute id="Text"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="Dimension" datatype="NVARCHAR" length="3" expressionLanguage="SQL">
+        <formula>'004'</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="CD_PRODUCT_HIERARCHY">
+      <mapping xsi:type="Calculation:AttributeMapping" target="Code" source="ProductHierarchyNodeId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Text" source="ProductHierarchyNode"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Location">
+    <viewAttributes>
+      <viewAttribute id="Code"/>
+      <viewAttribute id="Text"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="Dimension" datatype="NVARCHAR" length="3" expressionLanguage="SQL">
+        <formula>'006'</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="CD_LOCATION">
+      <mapping xsi:type="Calculation:AttributeMapping" target="Code" source="LocationId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Text" source="Location"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="LocationGroup">
+    <viewAttributes>
+      <viewAttribute id="Code"/>
+      <viewAttribute id="Text"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="Dimension" datatype="NVARCHAR" length="3" expressionLanguage="SQL">
+        <formula>'007'</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="CD_LOCATION_GROUP">
+      <mapping xsi:type="Calculation:AttributeMapping" target="Code" source="LocationHierarchyId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Text" source="LocationHierarchyNodeId"/>
+    </input>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Union_1">
+  <attributes>
+    <attribute id="Dimension" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Dimension"/>
+      <keyMapping columnObjectName="Union_1" columnName="Dimension"/>
+    </attribute>
+    <attribute id="Code" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MaterialId"/>
+      <keyMapping columnObjectName="Union_1" columnName="Code"/>
+    </attribute>
+    <attribute id="Text" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Material"/>
+      <keyMapping columnObjectName="Union_1" columnName="Text"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="474.7377768962724" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Product" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302.0000000000001" y="406.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="ProductGroup" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="722.0000000000001" y="406.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Union_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="474.7377768962724" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="MerchandiseHierarchy" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="512.0000000000001" y="406.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="ProductHierarchy" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="91.99999999999997" y="406.9999988079071"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Location" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="925" y="407"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="LocationGroup" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="1115" y="397"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

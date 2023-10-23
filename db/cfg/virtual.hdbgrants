@@ -1,0 +1,10 @@
+{
+	"lcp-car-ups": {
+		"object_owner": {
+			"roles": ["CC_VIRTUAL"]
+		},
+		"application_user": {
+			"roles": ["CC_VIRTUAL"]
+		}
+	}
+}

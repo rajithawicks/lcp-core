@@ -1,0 +1,152 @@
+PROCEDURE "UPDATE_ACCESS_SEQUENCE"(
+	IN  IV_RULEID string,
+	IN  IV_EVENTTYPEID string,
+	IN	IV_DIMENSIONID string,
+	IN	IV_PRIORITY string,
+	IN	IV_ACCESSSEQUENCEUUID nvarchar(32),
+	OUT ET_RETURN "TT_RETURN_MESSAGE"
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   --DEFAULT SCHEMA <default_schema_name>
+   --READS SQL DATA 
+   AS
+BEGIN
+   /*************************************
+       Write your procedure logic 
+   *************************************/
+   USING "UTILITY" AS util;
+   USING "MESSAGEUTILITY" AS message; 
+   USING "C_MESSAGE_TYPE" AS messageType;
+	
+	declare sMessage string;
+	declare checkFlag boolean = true;
+	declare doExist boolean = true;
+	declare IT_CHECK_CRITERIA table (
+   					COLUMN_VALUE nvarchar(50),
+   					COLUMN_NAME nvarchar(50)
+   				);
+   	declare i integer;
+   	declare vRuleId string = '';
+   	declare vEventTypeId string = '';
+   	declare vDimensionId string = '';
+   	declare vPriority string = '';
+   	
+   	-- When any mandatory fields (excluding key ACCESSSEQUENCEUUID) in UPDATE is empty, the value will be extracted from table
+	if (( :IV_RULEID is null OR :IV_RULEID = '' ) OR ( :IV_EVENTTYPEID is null OR :IV_EVENTTYPEID = '' ) OR 
+	   ( :IV_DIMENSIONID is null OR :IV_DIMENSIONID = '' ) OR ( :IV_PRIORITY is null OR :IV_PRIORITY = '' )) then
+		SELECT RULEID, EVENTTYPEID, DIMENSIONID, PRIORITY 
+			INTO vRuleId, vEventTypeId, vDimensionId, vPriority 
+			FROM "PR_ACCESSSEQUENCE" 
+			WHERE ACCESSSEQUENCEUUID = :IV_ACCESSSEQUENCEUUID;
+	end if;
+	
+	-- check existence of access sequence
+    :IT_CHECK_CRITERIA.insert((:IV_ACCESSSEQUENCEUUID,'ACCESSSEQUENCEUUID'), 1);
+    CALL util:"check_data_exists"('PR_ACCESSSEQUENCE',:IT_CHECK_CRITERIA,:checkFlag);
+    if (:checkFlag = false) then
+    	CALL message:"get_message"('', '', '001', :IV_ACCESSSEQUENCEUUID, '', '', '', :sMessage);
+    	:ET_RETURN.insert((messageType:error, :sMessage));
+    end if;	
+    
+	-- check for mandatory fields : RULEID
+    if( :IV_RULEID is null OR :IV_RULEID = '') then
+    	-- When both input & table values are empty, raise error
+    	if vRuleId = '' then
+			call message:"get_message"('','','010', '', '', '', '', :sMessage);
+			:ET_RETURN.insert((messageType:error, :sMessage));
+			checkFlag = false;
+		end if;
+	else
+		vRuleId = :IV_RULEID;
+	    -- check existence of RULEID if not empty
+		:IT_CHECK_CRITERIA.delete();
+	    :IT_CHECK_CRITERIA.insert((:IV_RULEID,'RULEID'), 1);
+	    call util:"check_data_exists"('PR_RULETEXT',:IT_CHECK_CRITERIA,:doExist);
+	    if (:doExist = false) then
+	    	CALL message:"get_message"('', '', '007', :IV_RULEID, '', '', '', :sMessage);
+	    	:ET_RETURN.insert((messageType:error, :sMessage));
+	    	checkFlag = false;
+	    end if;	
+	end if;
+
+	-- check for mandatory fields : EVENTTYPEID
+	if( :IV_EVENTTYPEID is null OR :IV_EVENTTYPEID = '') then
+		if vEventTypeId = '' then
+			call message:"get_message"('','','009', '', '', '', '', :sMessage);
+			:ET_RETURN.insert((messageType:error, :sMessage));
+			checkFlag = false;
+		end if;
+	else
+		vEventTypeId = :IV_EVENTTYPEID;
+		-- check existence of EVENTTYPEID if not empty
+		:IT_CHECK_CRITERIA.delete();
+	    :IT_CHECK_CRITERIA.insert((:IV_EVENTTYPEID,'EVENTTYPEID'), 1);
+	    call util:"check_data_exists"('PR_EVENTTYPETEXT',:IT_CHECK_CRITERIA,:doExist);
+	    if (:doExist = false) then
+	    	CALL message:"get_message"('', '', '008', :IV_EVENTTYPEID, '', '', '', :sMessage);
+	    	:ET_RETURN.insert((messageType:error, :sMessage));
+	    	checkFlag = false;
+	    end if;	
+	end if;
+	
+	-- -- check for mandatory fields : DIMENSIONID
+	if( :IV_DIMENSIONID is null OR :IV_DIMENSIONID = '' ) then
+		if vDimensionId = '' then
+			call message:"get_message"('','','012', '', '', '', '', :sMessage);
+			:ET_RETURN.insert((messageType:error, :sMessage));
+			checkFlag = false;
+		end if;
+	else
+		vDimensionId = :IV_DIMENSIONID;
+		-- check existence of DIMENSIONID if not empty
+		:IT_CHECK_CRITERIA.delete();
+	    :IT_CHECK_CRITERIA.insert((:IV_DIMENSIONID,'DIMENSIONID'), 1);
+	    call util:"check_data_exists"('PR_DIMENSIONTEXT',:IT_CHECK_CRITERIA,:doExist);
+	    if (:doExist = false) then
+	    	CALL message:"get_message"('', '', '011', :IV_DIMENSIONID, '', '', '', :sMessage);
+	    	:ET_RETURN.insert((messageType:error, :sMessage));
+	    	checkFlag = false;
+	    end if;	
+	end if;
+	
+		-- check for mandatory fields : PRIORITY
+    if( :IV_PRIORITY is null OR :IV_PRIORITY = '') then
+    	if vPriority = '' then 
+			call message:"get_message"('','','013', '', '', '', '', :sMessage);
+			:ET_RETURN.insert((messageType:error, :sMessage));
+			checkFlag = false;
+		end if;
+	else
+		vPriority = :IV_PRIORITY;
+	end if;
+	if (:checkFlag = true) then
+		-- Verify that there is no duplicate unique combination on RuleId, EventTypeId & DimensionId aside from existing record to UPDATE
+		IT_ACCESSSEQUENCE = SELECT ACCESSSEQUENCEUUID 
+								FROM "PR_ACCESSSEQUENCE"
+								WHERE RULEID = :vRuleId
+								AND EVENTTYPEID = :vEventTypeId
+								AND DIMENSIONID = :vDimensionId;
+		for i in 1..RECORD_COUNT(:IT_ACCESSSEQUENCE) do
+			if (:checkFlag = true) then
+				if ( :IT_ACCESSSEQUENCE.ACCESSSEQUENCEUUID[i] != '' AND :IT_ACCESSSEQUENCE.ACCESSSEQUENCEUUID[i] != :IV_ACCESSSEQUENCEUUID ) then
+				    CALL message:"get_message"('', '', '004', :vRuleId, :vEventTypeId, :vDimensionId, '', :sMessage);
+			    	:ET_RETURN.insert((messageType:error, :sMessage));
+			    	checkFlag = false;		
+				end if;
+			end if;
+		end for;
+	end if;
+
+	if (:checkFlag = true) then
+    	update "PR_ACCESSSEQUENCE"
+			set 
+				RULEID = :vRuleId,
+				EVENTTYPEID = :vEventTypeId,
+				DIMENSIONID = :vDimensionId,
+			    PRIORITY = :vPriority
+			where 
+				ACCESSSEQUENCEUUID = :IV_ACCESSSEQUENCEUUID;
+			commit;
+	end if;
+END

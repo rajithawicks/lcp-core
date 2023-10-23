@@ -1,0 +1,41 @@
+VIEW "CV.RuleMessageView"(
+	"RULEID",
+	"RULE",
+	"EVENTTYPEID",
+	"EVENTTYPE",
+	"VALIDFROM",
+	"VALIDTO",
+	"MESSAGETYPEID",
+	"MESSAGETYPE",
+	"LANGUAGEKEY",
+	"MESSAGE") AS
+		SELECT 
+			PricingRule_0.RULEID AS RuleId,
+			RuleText_1.DESCRIPTION AS Rule,
+			MessageTypeMaintenance_2.EVENTTYPEID AS EventTypeId,
+			EventTypeText_3.DESCRIPTION AS EventType,
+			MessageTypeMaintenance_2.VALIDFROM AS ValidFrom,
+			MessageTypeMaintenance_2.VALIDTO AS ValidTo,
+			MessageTypeMaintenance_2.MESSAGETYPEID AS MessageTypeId,
+			MessageType_4.DESCRIPTION AS MessageType,
+			MessageClassText_5.LANGUAGEKEY AS LanguageKey,
+			MessageClassText_5."TEXT" AS Message
+            FROM 
+			PR_PRICINGRULE AS PricingRule_0
+			LEFT OUTER JOIN
+			PR_RULETEXT AS RuleText_1
+			ON PricingRule_0.RULEID = RuleText_1.RULEID
+			INNER JOIN
+			PR_MESSAGETYPEMAINTENANCE AS MessageTypeMaintenance_2
+			ON PricingRule_0.RULEID = MessageTypeMaintenance_2.RULEID
+			LEFT OUTER JOIN
+			PR_EVENTTYPETEXT AS EventTypeText_3
+			ON MessageTypeMaintenance_2.EVENTTYPEID = EventTypeText_3.EVENTTYPEID
+			INNER JOIN
+			CA_MESSAGETYPE AS MessageType_4
+			ON MessageTypeMaintenance_2.MESSAGETYPEID = MessageType_4.MESSAGETYPEID
+			LEFT OUTER JOIN
+			CA_MESSAGECLASSTEXT AS MessageClassText_5
+			ON PricingRule_0.MESSAGENUMBER = MessageClassText_5.MESSAGENUMBER
+		WHERE MessageClassText_5.CLASSID = 'PRE'
+WITH READ ONLY;

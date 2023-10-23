@@ -1,0 +1,57 @@
+_schema-version: '3.1'
+ID: com.rizing.lcp.core
+version: 1.0.0
+description: "A simple CAP project."
+parameters:
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npx cds build --production
+modules:
+  - name: lcp-core-js
+    type: nodejs
+    path: gen/srv
+    parameters:
+      buildpack: nodejs_buildpack
+    build-parameters:
+      builder: npm
+    provides:
+      - name: srv-api # required by consumers of CAP services (e.g. approuter)
+        properties:
+          srv-url: ${default-url}
+    requires:
+      # - name: lcp-core-auth
+      - name: lcp-core-db
+      - name: lcp-uaa
+
+  - name: lcp-core-db
+    type: hdb
+    path: gen/db
+    parameters:
+      buildpack: nodejs_buildpack
+    requires:
+      - name: lcp-core-container
+      - name: lcp-car-ups
+        group: SERVICE-REPLACEMENTS
+        properties:
+          external_access: '~{service-name}'
+      
+resources:
+  - name: lcp-uaa
+    type: org.cloudfoundry.existing-service
+    parameters:
+      service-name: lcp-uaa
+  
+  - name: lcp-core-container
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared
+  - name: lcp-car-ups
+    type: org.cloudfoundry.existing-service
+    parameters:
+      service-name: lcp-car-ups
+    properties:
+      service-name: '${service-name}'

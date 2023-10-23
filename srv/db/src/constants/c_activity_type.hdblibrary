@@ -1,0 +1,9 @@
+LIBRARY "C_ACTIVITY_TYPE"
+  LANGUAGE SQLSCRIPT AS
+ BEGIN 
+ 
+   public variable create constant nvarchar(6) = 'Create'; 
+   public variable update constant nvarchar(6) = 'Update'; 
+   public variable delete constant nvarchar(6) = 'Delete'; 
+   
+END;

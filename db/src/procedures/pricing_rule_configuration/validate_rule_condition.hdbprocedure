@@ -1,0 +1,295 @@
+PROCEDURE "VALIDATE_RULE_CONDITION"( 
+	IN	IV_ACTIVITYTYPE nvarchar(6),
+	IN	IV_RULECONDITIONUUID nvarchar(32),
+	IN  IV_RULEID nvarchar(4) default null,
+	IN  IV_EVENTTYPEID nvarchar(3) default null,
+	IN	IV_SALESORGANIZATIONID nvarchar(4) default null,
+	IN	IV_DISTRIBUTIONCHANNELID nvarchar(2) default null,
+	IN	IV_VALIDFROM date default null,
+	IN	IV_VALIDTO date default null,
+	IN  IV_PROFILEID nvarchar(1) default null,
+	IN	IV_DIMENSIONID nvarchar(3) default null,
+	OUT ET_RETURN "TT_RETURN_MESSAGE"
+)
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   --DEFAULT SCHEMA <default_schema_name>
+   --READS SQL DATA AS
+   AS
+BEGIN
+   /***********************************************************************************
+       This procedure contains the common validations needed for competitor product app.  
+   ************************************************************************************/
+	USING "UTILITY" AS util;
+	USING "MESSAGEUTILITY" AS message; 
+	USING "C_MESSAGE_TYPE" AS messageType;
+	USING "C_ACTIVITY_TYPE" AS activityType;
+	
+	declare sMessage string;
+	declare checkFlag boolean = true;
+	declare doExist boolean = true;
+	declare IT_CHECK_CRITERIA table (
+   					COLUMN_VALUE nvarchar(50),
+   					COLUMN_NAME nvarchar(50)
+   				);
+   
+    declare i integer;
+	declare vValidFrom string;
+	declare vValidTo string;
+	declare vHasRounding tinyint = 0;
+	declare vDimensionId nvarchar(3);
+	declare vCurrentDate date = null;
+	declare vOldValidFrom date = null;
+	declare vSqlString string;
+
+	-- check for mandatory fields : RULECONDITIONUUID (UUID generated from frontend call to function import)
+    if( :IV_RULECONDITIONUUID is null OR :IV_RULECONDITIONUUID = '') then
+		call message:"get_message"('','','029', '', '', '', '', :sMessage);
+		:ET_RETURN.insert((messageType:error, :sMessage));
+		checkFlag = false;
+	else
+		if ( :IV_ACTIVITYTYPE = activityType:create ) then
+			-- For create RULECONDITIONUUID shall be new in table (UUID generated from frontend call to function import)
+		    -- check existence of RULECONDITIONUUID if not empty
+			:IT_CHECK_CRITERIA.delete();
+		    :IT_CHECK_CRITERIA.insert((:IV_RULECONDITIONUUID,'RULECONDITIONUUID'), 1);
+		    call util:"check_data_exists"('PR_RULECONDITION',:IT_CHECK_CRITERIA,:doExist);
+		    if ( :doExist = true ) then
+		    	-- RULECONDITIONUUID already exist message
+		    	call message:"get_message"('', '', '033', :IV_RULECONDITIONUUID, '', '', '', :sMessage);
+		    	:ET_RETURN.insert((messageType:error, :sMessage));
+		    	checkFlag = false;
+		    end if;	
+		elseif ( :IV_ACTIVITYTYPE = activityType:update OR :IV_ACTIVITYTYPE = activityType:delete ) then
+			-- For update, RULECONDITIONUUID shall already exist in table
+			-- check existence of Rule Condition for update
+			:IT_CHECK_CRITERIA.delete();
+			:IT_CHECK_CRITERIA.insert((:IV_RULECONDITIONUUID,'RULECONDITIONUUID'), 1);
+		    call util:"check_data_exists"('PR_RULECONDITION',:IT_CHECK_CRITERIA,:doExist);
+		    if (:doExist = false) then
+		    	-- RULECONDITIONUUID does not exist message
+		    	call message:"get_message"('', '', '030', :IV_RULECONDITIONUUID, '', '', '', :sMessage);
+		    	:ET_RETURN.insert((messageType:error, :sMessage));
+		    end if;
+		    if ( :IV_ACTIVITYTYPE = activityType:delete ) then
+		    	return;
+		    end if;
+		end if;
+	end if;
+	
+	-- check for mandatory fields : RULEID
+    if( :IV_RULEID is null OR :IV_RULEID = '') then
+		call message:"get_message"('','','010', '', '', '', '', :sMessage);
+		:ET_RETURN.insert((messageType:error, :sMessage));
+		checkFlag = false;
+	else
+	    -- check existence of RULEID if not empty
+		:IT_CHECK_CRITERIA.delete();
+	    :IT_CHECK_CRITERIA.insert((:IV_RULEID,'RULEID'), 1);
+	    call util:"check_data_exists"('PR_RULETEXT',:IT_CHECK_CRITERIA,:doExist);
+	    if ( :doExist = false ) then
+	    	-- Invalid Rule ID message
+	    	call message:"get_message"('', '', '007', :IV_RULEID, '', '', '', :sMessage);
+	    	:ET_RETURN.insert((messageType:error, :sMessage));
+	    	checkFlag = false;
+	    end if;	
+	end if;
+
+	-- check for mandatory fields : EVENTTYPEID
+    if( :IV_EVENTTYPEID is null OR :IV_EVENTTYPEID = '') then
+		call message:"get_message"('','','009', '', '', '', '', :sMessage);
+		:ET_RETURN.insert((messageType:error, :sMessage));
+		checkFlag = false;
+	else
+	    -- check existence of EVENTTYPEID if not empty
+		:IT_CHECK_CRITERIA.delete();
+	    :IT_CHECK_CRITERIA.insert((:IV_EVENTTYPEID,'EVENTTYPEID'), 1);
+	    call util:"check_data_exists"('PR_EVENTTYPETEXT',:IT_CHECK_CRITERIA,:doExist);
+	    if ( :doExist = false ) then
+	    	call message:"get_message"('', '', '008', :IV_EVENTTYPEID, '', '', '', :sMessage);
+	    	:ET_RETURN.insert((messageType:error, :sMessage));
+	    	checkFlag = false;
+	    end if;		
+	end if;
+	
+	-- check for mandatory fields : SALESORGANIZATIONID
+    if( :IV_SALESORGANIZATIONID is null OR :IV_SALESORGANIZATIONID = '') then
+		call message:"get_message"('','','020', '', '', '', '', :sMessage);
+		:ET_RETURN.insert((messageType:error, :sMessage));
+		checkFlag = false;
+	else
+	    -- check existence of SALESORGANIZATIONID if not empty
+		:IT_CHECK_CRITERIA.delete();
+	    :IT_CHECK_CRITERIA.insert((:IV_SALESORGANIZATIONID,'SALESORGANIZATIONID'), 1);
+	    call util:"check_data_exists"('CD_SALES_ORGANIZATION',:IT_CHECK_CRITERIA,:doExist);
+	    if ( :doExist = false ) then
+	    	CALL message:"get_message"('', '', '021', :IV_SALESORGANIZATIONID, '', '', '', :sMessage);
+	    	:ET_RETURN.insert((messageType:error, :sMessage));
+	    	checkFlag = false;
+	    end if;	
+	end if;
+	
+	-- check for mandatory fields : DISTRIBUTIONCHANNELID
+    if( :IV_DISTRIBUTIONCHANNELID is null OR :IV_DISTRIBUTIONCHANNELID = '') then
+		call message:"get_message"('','','022', '', '', '', '', :sMessage);
+		:ET_RETURN.insert((messageType:error, :sMessage));
+		checkFlag = false;
+	else
+		-- check existence of DISTRIBUTIONCHANNELID if not empty
+		:IT_CHECK_CRITERIA.delete();
+	    :IT_CHECK_CRITERIA.insert((:IV_DISTRIBUTIONCHANNELID,'DISTRIBUTIONCHANNELID'), 1);
+	    call util:"check_data_exists"('CD_DISTRIBUTION_CHANNEL',:IT_CHECK_CRITERIA,:doExist);
+	    if(:doExist = false) then
+		    call message:"get_message"('', '', '023', :IV_DISTRIBUTIONCHANNELID, '', '', '', :sMessage);
+	    	:ET_RETURN.insert((messageType:error, :sMessage));
+	    	checkFlag = false;
+	    end if;  
+	end if;
+	
+	-- Validity period cannot be past dates. Get current date
+	EXEC 'SELECT CURRENT_DATE FROM DUMMY' INTO vCurrentDate;
+	
+	-- check for mandatory fields : VALIDFROM
+    if( :IV_VALIDFROM is null OR :IV_VALIDFROM = '') then
+		call message:"get_message"('','','024', '', '', '', '', :sMessage);
+		:ET_RETURN.insert((messageType:error, :sMessage));
+		checkFlag = false;
+	else
+		-- Valid From cannot be past date
+		if ( :IV_ACTIVITYTYPE = activityType:update ) then
+			-- For UPDATE, ValidFrom date cannot be earlier than initially set date during CREATE
+			vSqlString = 'SELECT VALIDFROM FROM "PR_RULECONDITION" WHERE RULECONDITIONUUID = '''|| :IV_RULECONDITIONUUID || '''';
+			EXEC vSqlString INTO vOldValidFrom;
+			if vOldValidFrom is not null then
+				if ( :IV_VALIDFROM < :vOldValidFrom ) then
+					CALL message:"get_message"('','','046','','','','',:sMessage);
+					:ET_RETURN.insert((messageType:error, :sMessage));			
+					checkFlag = false;
+				end if;
+			end if;		
+		end if;
+		if ( :IV_ACTIVITYTYPE = activityType:create ) then
+			-- For CREATE, ValidFrom date cannot be earlier than today
+			if vCurrentDate is not null then
+				if ( :IV_VALIDFROM < :vCurrentDate ) then
+					CALL message:"get_message"('','','044','','','','',:sMessage);
+					:ET_RETURN.insert((messageType:error, :sMessage));			
+					checkFlag = false;
+				end if;
+			end if;
+		end if;
+		
+		-- check for VALIDFROM date to be earlier than VALIDTO date
+		if :IV_VALIDFROM > :IV_VALIDTO then
+			call message:"get_message"('','','026', '', '', '', '', :sMessage);
+			:ET_RETURN.insert((messageType:error, :sMessage));
+			checkFlag = false;			
+		end if;
+	end if;
+	
+	-- check for mandatory fields : VALIDTO
+    if( :IV_VALIDTO is null OR :IV_VALIDTO = '') then
+		call message:"get_message"('','','025', '', '', '', '', :sMessage);
+		:ET_RETURN.insert((messageType:error, :sMessage));
+		checkFlag = false;
+	else
+		-- Valid To cannot be past date
+		if ( :IV_ACTIVITYTYPE = activityType:create ) then
+			-- For CREATE, ValidTo date cannot be earlier than today		
+			if vCurrentDate is not null then
+				if ( :IV_VALIDTO < :vCurrentDate ) then
+					CALL message:"get_message"('','','045','','','','',:sMessage);
+					:ET_RETURN.insert((messageType:error, :sMessage));			
+					checkFlag = false;
+				end if;
+			end if;	
+		end if;
+	end if;
+	
+	-- check for mandatory fields : PROFILEID
+    if( :IV_PROFILEID is null OR :IV_PROFILEID = '') then
+    	-- check if Rule Screen Config HasRounding. If it does, PROFILEID is mandatory
+    	if ( :IV_RULEID is not null AND :IV_RULEID != '') then
+		    SELECT "HASROUNDING" INTO vHasRounding FROM "PR_RULESCREENCONFIGURATION" WHERE "RULEID" = :IV_RULEID; 
+		    if vHasRounding = 1 then
+				call message:"get_message"('','','027', :IV_RULEID, '', '', '', :sMessage);
+				:ET_RETURN.insert((messageType:error, :sMessage));
+				checkFlag = false;
+			end if;
+		end if;
+	else
+		-- check existence of PROFILEID if not empty
+		:IT_CHECK_CRITERIA.delete();
+	    :IT_CHECK_CRITERIA.insert((:IV_PROFILEID,'PROFILEID'), 1);
+	    call util:"check_data_exists"('PR_ROUNDINGPROFILE',:IT_CHECK_CRITERIA,:doExist);
+	    if(:doExist = false) then
+		    call message:"get_message"('', '', '028', :IV_PROFILEID, '', '', '', :sMessage);
+	    	:ET_RETURN.insert((messageType:error, :sMessage));
+	    	checkFlag = false;
+	    end if;
+	end if;	
+	
+	-- check for mandatory fields : DIMENSIONID
+    if( :IV_DIMENSIONID is null OR :IV_DIMENSIONID = '') then
+		call message:"get_message"('','','031', '', '', '', '', :sMessage);
+		:ET_RETURN.insert((messageType:error, :sMessage));
+		checkFlag = false;
+	else
+		-- check existence of DIMENSIONID if not empty
+		:IT_CHECK_CRITERIA.delete();
+	    :IT_CHECK_CRITERIA.insert((:IV_DIMENSIONID,'DIMENSIONID'), 1);
+	    call util:"check_data_exists"('PR_DIMENSIONTEXT',:IT_CHECK_CRITERIA,:doExist);
+	    if(:doExist = false) then
+		    call message:"get_message"('', '', '032', :IV_DIMENSIONID, '', '', '', :sMessage);
+	    	:ET_RETURN.insert((messageType:error, :sMessage));
+	    	checkFlag = false;
+	    end if;
+	end if;
+	
+	if (checkFlag = true) then
+		-- Get all combination of Rule Condition based on input for complete ranges of validity		
+		IT_RULECONDITION = 
+			SELECT "RULECONDITIONUUID", "VALIDFROM", "VALIDTO"
+			FROM "PR_RULECONDITION"
+			WHERE "RULEID" = :IV_RULEID AND "EVENTTYPEID" = :IV_EVENTTYPEID AND "SALESORGANIZATIONID" = :IV_SALESORGANIZATIONID 
+			AND "DISTRIBUTIONCHANNELID" = :IV_DISTRIBUTIONCHANNELID AND "PROFILEID" = :IV_PROFILEID AND "DIMENSIONID" = :IV_DIMENSIONID;
+		for i in 1..RECORD_COUNT(:IT_RULECONDITION) do
+			if (:checkFlag = true) then
+				if ( :IV_RULECONDITIONUUID != :IT_RULECONDITION.RULECONDITIONUUID[i] ) then
+					-- Checking on all possible overlapping range of dates
+					if (:IT_RULECONDITION.VALIDFROM[i] < :IV_VALIDFROM AND :IT_RULECONDITION.VALIDTO[i] > :IV_VALIDTO) OR 
+					   (:IT_RULECONDITION.VALIDFROM[i] > :IV_VALIDFROM AND :IT_RULECONDITION.VALIDTO[i] < :IV_VALIDTO) OR 
+					   (:IT_RULECONDITION.VALIDFROM[i] <= :IV_VALIDFROM AND :IT_RULECONDITION.VALIDTO[i] >= :IV_VALIDFROM) OR 
+					   (:IT_RULECONDITION.VALIDFROM[i] <= :IV_VALIDTO AND :IT_RULECONDITION.VALIDTO[i] >= :IV_VALIDTO) then
+						
+						-- if overlapping entry exist, raise error
+						vValidFrom = :IT_RULECONDITION.VALIDFROM[i];
+						vValidTo = :IT_RULECONDITION.VALIDTO[i];
+				    	call message:"get_message"('','','015',:IV_RULEID,:IV_EVENTTYPEID,:vValidFrom,:vValidTo,:sMessage);
+				    	:ET_RETURN.insert((messageType:error, :sMessage));
+				    	checkFlag = false;
+					end if;
+				end if;
+			end if;
+		end for;	
+	end if;
+	
+	if ((checkFlag = true) AND ( :IV_ACTIVITYTYPE = activityType:update )) then
+		-- In edit mode, change in DIMESNSIONID can only be done when there is no Event Rule Dimension item created with the the same RULECONDITIONUUID, 
+		SELECT "DIMENSIONID" INTO vDimensionId FROM "PR_RULECONDITION" WHERE "RULECONDITIONUUID" = :IV_RULECONDITIONUUID;
+		-- Input Dimension different from value in table
+		if ( :IV_DIMENSIONID != :vDimensionId ) then
+			IT_DIMENSION = 
+				SELECT "EVENTRULECONDITIONUUID"
+				FROM "PR_EVENTRULECONDITION"
+				WHERE "RULECONDITIONUUID" = :IV_RULECONDITIONUUID;
+			-- Exist item in Event Rule Dimension
+			if RECORD_COUNT(:IT_DIMENSION) > 0 then
+			    call message:"get_message"('', '', '043', :IV_DIMENSIONID, vDimensionId, '', '', :sMessage);
+		    	:ET_RETURN.insert((messageType:error, :sMessage));
+		    	checkFlag = false;			
+			end if;
+		end if;
+	end if;
+
+END

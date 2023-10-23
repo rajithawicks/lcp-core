@@ -1,0 +1,51 @@
+LIBRARY "UTILITY"
+  LANGUAGE SQLSCRIPT AS
+ BEGIN 
+ 
+   public variable rowcount int; 
+
+   public procedure "check_data_exists"( 
+   				in IV_TABLE_NAME string,
+   				in IT_CHECK_CRITERIA table (
+   					COLUMN_VALUE nvarchar(50),
+   					COLUMN_NAME nvarchar(50)
+   				),
+   				out OV_RESULT boolean
+				)
+	LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER AS
+   BEGIN
+       declare lv_count int;
+       declare i int = 1;
+       declare where_clause string = '';
+       declare column_names		nvarchar(50) ARRAY;
+	   declare column_values    nvarchar(50) ARRAY;
+	   
+	   column_names   = ARRAY_AGG( :IT_CHECK_CRITERIA.COLUMN_NAME );
+	   column_values   = ARRAY_AGG( :IT_CHECK_CRITERIA.COLUMN_VALUE );
+	   
+	   FOR i IN 1..CARDINALITY(:column_names) DO
+		IF i = 1 THEN
+			IF :column_names[:i] = 'DESCRIPTION' THEN
+				where_clause = 'UPPER(' || :column_names[:i] || ') IN (''' || :column_values[:i] || ''')';
+			ELSE
+    			where_clause = '"' || :column_names[:i] || '"=''' || :column_values[:i] || '''';
+    		END IF;
+    	ELSE
+			IF :column_names[:i] = 'DESCRIPTION' THEN
+				where_clause = where_clause || ' and UPPER(' || :column_names[:i] || ') IN (''' || :column_values[:i] || ''')';
+			ELSE    	
+    			where_clause = where_clause || ' and "' || :column_names[:i] || '"=''' || :column_values[:i] || '''';
+    		END IF;
+    	END IF;
+	   END FOR;
+	   
+		EXEC 'SELECT COUNT(*) FROM "' || :IV_TABLE_NAME || '" WHERE ' || :where_clause INTO lv_count default 0;
+       if  lv_count > 0 then
+        OV_RESULT = true;
+       else
+        OV_RESULT = false;
+       end if;
+   END;
+
+END;

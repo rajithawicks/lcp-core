@@ -1,0 +1,33 @@
+VIEW "CV.AccessSequenceView"(
+	"AccessSequenceUuid",
+	"RuleId",
+	"Rule",
+	"EventTypeId",
+	"EventType",
+	"DimensionId",
+	"Dimension",
+	"Priority") AS
+		SELECT 
+			"AccessSequence_$0"."ACCESSSEQUENCEUUID" AS "AccessSequenceUuid",
+			"AccessSequence_$0"."RULEID" AS "RuleId",
+			"RuleText_$2"."DESCRIPTION" AS "Rule",
+			"AccessSequence_$0"."EVENTTYPEID" AS "EventTypeId",
+			"EventTypeText_$3"."DESCRIPTION" AS "EventType",
+			"AccessSequence_$0"."DIMENSIONID" AS "DimensionId",
+			"DimensionText_$4"."DESCRIPTION" AS "Dimension",
+			TO_INT("AccessSequence_$0"."PRIORITY") AS "Priority"
+		FROM 
+			"PR_ACCESSSEQUENCE" AS "AccessSequence_$0"
+			LEFT OUTER JOIN
+			"PR_PRICINGRULE" AS "PricingRule_$1"
+			ON ( "AccessSequence_$0"."RULEID" = "PricingRule_$1"."RULEID" )
+			LEFT OUTER JOIN
+			"PR_RULETEXT" AS "RuleText_$2"
+			ON ( "AccessSequence_$0"."RULEID" = "RuleText_$2"."RULEID" )
+			LEFT OUTER JOIN
+			"PR_EVENTTYPETEXT" AS "EventTypeText_$3"
+			ON ( "AccessSequence_$0"."EVENTTYPEID" = "EventTypeText_$3"."EVENTTYPEID" )
+			LEFT OUTER JOIN
+			"PR_DIMENSIONTEXT" AS "DimensionText_$4"
+			ON ( "AccessSequence_$0"."DIMENSIONID" = "DimensionText_$4"."DIMENSIONID" )
+WITH READ ONLY;

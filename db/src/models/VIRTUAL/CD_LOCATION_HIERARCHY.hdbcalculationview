@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CD_LOCATION_HIERARCHY" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<descriptions defaultDescription="CD_LOCATION_HIERARCHY"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="RetailLocationHierarchyNode">
+    <resourceUri>RetailLocationHierarchyNode</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="RetailLocationHierarchyNode" filterExpressionLanguage="COLUMN_ENGINE">
+  <attributes>
+    <attribute id="SAPClient" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SAPClient"/>
+      <keyMapping columnObjectName="RetailLocationHierarchyNode" columnName="SAPClient"/>
+    </attribute>
+    <attribute id="LocationHierarchyNodeId" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LocationHierarchyNodeId"/>
+      <keyMapping columnObjectName="RetailLocationHierarchyNode" columnName="LocationHierarchyNodeId"/>
+    </attribute>
+    <attribute id="LocationHierarchyId" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LocationHierarchyId"/>
+      <keyMapping columnObjectName="RetailLocationHierarchyNode" columnName="LocationHierarchyId"/>
+    </attribute>
+  
+    <attribute id="LocationId" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LocationId"/>
+      <keyMapping columnObjectName="RetailLocationHierarchyNode" columnName="LocationId"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+
+  <filter>&quot;SAPClient&quot; = '100'</filter>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

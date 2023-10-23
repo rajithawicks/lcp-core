@@ -1,0 +1,16 @@
+VIEW "IV.InventoryVisibilityView"(
+	"ProductId",
+	"LocationId",
+	"CurrentStock",
+	"OnOrderStockQuantity",
+	"CostPerStockUnit",
+	"CurrentStockValuatedAtCostValueInCompanyCurrency") AS
+		SELECT 
+			"InventoryVisibility_$0"."ProductId" AS "ProductId",
+			"InventoryVisibility_$0"."LocationId" AS "LocationId",
+			"InventoryVisibility_$0"."CurrentStock" AS "CurrentStock",
+			"InventoryVisibility_$0"."OnOrderStockQuantity" AS "OnOrderStockQuantity",
+			"InventoryVisibility_$0"."CostPerStockUnit" AS "CostPerStockUnit",
+			"InventoryVisibility_$0"."CurrentStockValuatedAtCostValueInCompanyCurrency" AS "CurrentStockValuatedAtCostValueInCompanyCurrency"
+		FROM "InventoryVisibility" AS "InventoryVisibility_$0"
+		WHERE ( "InventoryVisibility_$0"."SAPClient" = '100' );

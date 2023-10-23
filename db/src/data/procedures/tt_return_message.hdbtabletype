@@ -1,0 +1,4 @@
+TYPE "TT_RETURN_MESSAGE" AS TABLE ( 
+     "TYPE" nvarchar(12),
+	 "MESSAGE" varchar(300)
+)

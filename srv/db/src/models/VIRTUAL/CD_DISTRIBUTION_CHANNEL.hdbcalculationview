@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CD_DISTRIBUTION_CHANNEL" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<descriptions defaultDescription="CD_DISTRIBUTION_CHANNEL"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="DistributionChannel">
+    <resourceUri>DistributionChannel</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="DistributionChannel" filterExpressionLanguage="COLUMN_ENGINE">
+<attributes>
+    <attribute id="SAPClient" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SAPClient"/>
+      <keyMapping columnObjectName="DistributionChannel" columnName="SAPClient"/>
+    </attribute>
+    <attribute id="DistributionChannelId" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DistributionChannelId"/>
+      <keyMapping columnObjectName="DistributionChannel" columnName="DistributionChannelId"/>
+    </attribute>
+    <attribute id="DistributionChannel" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DistributionChannel"/>
+      <keyMapping columnObjectName="DistributionChannel" columnName="DistributionChannel"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+
+  <filter>&quot;SAPClient&quot; = '100'</filter>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
