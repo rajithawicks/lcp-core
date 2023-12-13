@@ -246,13 +246,13 @@
       <keyCalculation datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
         <formula>if(isnull(&quot;ParentNodeId&quot;),'0','1')</formula>
       </keyCalculation>
-      </calculatedAttribute>
+    </calculatedAttribute>
     <calculatedAttribute id="DrillDownState" order="2" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="DrillDownState"/>
       <keyCalculation datatype="VARCHAR" expressionLanguage="COLUMN_ENGINE" length="13">
         <formula>if(isnull(&quot;ParentNodeId&quot;),'expanded','leaf')</formula>
       </keyCalculation>
-      </calculatedAttribute>
+    </calculatedAttribute>
   </calculatedAttributes>
   <baseMeasures/>
   <calculatedMeasures/>
@@ -273,7 +273,7 @@
     </shape>
     <shape modelObjectName="CD_RULE_DIMENSIONS" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
       <upperLeftCorner x="620" y="30"/>
-      <rectangleSize width="203.95458984375"/>
+      <rectangleSize width="203"/>
     </shape>
     <shape expanded="true" modelObjectName="Union_2" modelObjectNameSpace="CalculationView">
       <upperLeftCorner x="107" y="199"/>

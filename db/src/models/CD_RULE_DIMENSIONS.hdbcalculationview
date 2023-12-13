@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="CD_RULE_DIMENSIONS" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CD_RULE_DIMENSIONS" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
 <descriptions defaultDescription="CD_RULE_DIMENSIONS"/>
 <localVariables/>
 <variableMappings/>
@@ -10,6 +11,7 @@
     <resourceUri>CD_RULE_CONDITION</resourceUri>
   </DataSource>
 </dataSources>
+<snapshotProcedures/>
 <calculationViews>
   <calculationView xsi:type="Calculation:TableFunctionView" id="TABLEFUNCTION_1" tableFunctionName="GET_DIMENSIONS">
     <viewAttributes/>
@@ -21,25 +23,32 @@
       <viewAttribute id="DimensionId"/>
       <viewAttribute id="DIMENSION"/>
       <viewAttribute id="HASVALUE"/>
-      <viewAttribute id="RULECONDITIONUUID"/>
       <viewAttribute id="DIMENSIONID"/>
+      <viewAttribute id="RULECONDITIONUUID"/>
+      <viewAttribute hidden="true" id="JOIN$DIMENSIONID$DIMENSIONID"/>
     </viewAttributes>
     <calculatedViewAttributes/>
     <input node="TABLEFUNCTION_1">
       <mapping xsi:type="Calculation:AttributeMapping" target="DIMENSIONVALUES" source="DIMENSIONVALUE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="DimensionId" source="DIMENSIONID"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="RULECONDITIONUUID" source="RULECONDITIONUUID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="DIMENSIONID" source="DIMENSIONID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RULECONDITIONUUID" source="RULECONDITIONUUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DIMENSIONID$DIMENSIONID" source="DIMENSIONID"/>
     </input>
     <input node="PR_DIMENSIONTEXT">
       <mapping xsi:type="Calculation:AttributeMapping" target="DIMENSION" source="DESCRIPTION"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="HASVALUE" source="HASVALUE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="DimensionId" source="DIMENSIONID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DIMENSIONID$DIMENSIONID" source="DIMENSIONID"/>
     </input>
-    <joinAttribute name="DimensionId"/>
+    <joinAttribute name="JOIN$DIMENSIONID$DIMENSIONID"/>
   </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="Join_1_2" cardinality="C1_1" joinType="leftOuter" multiJoinNode="Join_1" multiJoinCentralTable="CD_RULE_CONDITION" multiJoinOrder="Outside In">
     <viewAttributes>
+      <viewAttribute id="DIMENSIONVALUES"/>
+      <viewAttribute id="DimensionId"/>
+      <viewAttribute id="DIMENSION"/>
+      <viewAttribute id="HASVALUE"/>
+      <viewAttribute id="DIMENSIONID"/>
       <viewAttribute id="RULECONDITIONUUID"/>
       <viewAttribute id="RuleId"/>
       <viewAttribute id="RULE"/>
@@ -53,11 +62,8 @@
       <viewAttribute id="ROUNDINGPROFILE"/>
       <viewAttribute id="VALIDFROM"/>
       <viewAttribute id="VALIDTO"/>
-      <viewAttribute id="DIMENSIONVALUES"/>
-      <viewAttribute id="DimensionId"/>
-      <viewAttribute id="DIMENSION"/>
-      <viewAttribute id="HASVALUE"/>
       <viewAttribute id="ISPERCENTAGE"/>
+      <viewAttribute hidden="true" id="JOIN$RULECONDITIONUUID$RULECONDITIONUUID"/>
       <viewAttribute hidden="true" id="JOIN$DimensionId$DIMENSIONID"/>
     </viewAttributes>
     <calculatedViewAttributes/>
@@ -76,6 +82,7 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="VALIDFROM" source="VALIDFROM"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="VALIDTO" source="VALIDTO"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ISPERCENTAGE" source="ISPERCENTAGE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$RULECONDITIONUUID$RULECONDITIONUUID" source="RULECONDITIONUUID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DimensionId$DIMENSIONID" source="DimensionId"/>
     </input>
     <input node="Join_1_1">
@@ -83,10 +90,11 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="DimensionId" source="DimensionId"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="DIMENSION" source="DIMENSION"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="HASVALUE" source="HASVALUE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="RULECONDITIONUUID" source="RULECONDITIONUUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIMENSIONID" source="DIMENSIONID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$RULECONDITIONUUID$RULECONDITIONUUID" source="RULECONDITIONUUID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DimensionId$DIMENSIONID" source="DIMENSIONID"/>
     </input>
-    <joinAttribute name="RULECONDITIONUUID"/>
+    <joinAttribute name="JOIN$RULECONDITIONUUID$RULECONDITIONUUID"/>
     <joinAttribute name="JOIN$DimensionId$DIMENSIONID"/>
   </calculationView>
 </calculationViews>
@@ -166,7 +174,9 @@
   
     <attribute id="ISPERCENTAGE" order="18" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="IS PERCENTAGE"/>
+  
       <keyMapping columnObjectName="Join_1_2" columnName="ISPERCENTAGE"/>
+  
     </attribute>
   </attributes>
   <calculatedAttributes/>

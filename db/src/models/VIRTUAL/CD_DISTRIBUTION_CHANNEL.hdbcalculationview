@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CD_DISTRIBUTION_CHANNEL" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CD_DISTRIBUTION_CHANNEL" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
 <descriptions defaultDescription="CD_DISTRIBUTION_CHANNEL"/>
 <localVariables/>
 <variableMappings/>
@@ -7,6 +8,7 @@
     <resourceUri>DistributionChannel</resourceUri>
   </DataSource>
 </dataSources>
+<snapshotProcedures/>
 <calculationViews/>
 <logicalModel id="DistributionChannel" filterExpressionLanguage="COLUMN_ENGINE">
 <attributes>

@@ -1,4 +1,5 @@
-using Core;
+using { Core as Core } from './Core';
+
 
 context PR {
     @title : 'Configuration Item'

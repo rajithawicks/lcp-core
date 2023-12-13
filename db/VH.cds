@@ -1,7 +1,9 @@
-using CA;
-using PR;
-using CD_DISTRIBUTION_CHANNEL;
-using CD_SALES_ORGANIZATION;
+using { CA as CA } from './CA';
+using { PR as PR } from './PR';
+using { CD_DISTRIBUTION_CHANNEL as CD_DISTRIBUTION_CHANNEL ,
+        CD_SALES_ORGANIZATION  as CD_SALES_ORGANIZATION,
+} from './datamodel';
+
 
 context VH {
      /* const are not yet supported in CDS so that why we have to use values directly in where condition */
@@ -73,25 +75,25 @@ context VH {
             RoundingProfile.VALUE     as Text
         };
 
-    // @title : 'Sales Organization View'
-    // view SalesOrganizationView as
-    //     select from CD_SALES_ORGANIZATION
-    //     {
-    //         @title : 'Code'
-    //         CD_SALES_ORGANIZATION.SalesOrganizationId as Code,
+    @title : 'Sales Organization View'
+    view SalesOrganizationView as
+        select from CD_SALES_ORGANIZATION
+        {
+            @title : 'Code'
+            CD_SALES_ORGANIZATION.SalesOrganizationId as Code,
 
-    //         @title : 'Text'
-    //         CD_SALES_ORGANIZATION.SalesOrganization   as Text
-    //     };
+            @title : 'Text'
+            CD_SALES_ORGANIZATION.SalesOrganization   as Text
+        };
 
-    // @title : 'Distribution Channel View'
-    // view DistributionChannelView as
-    //     select from CD_DISTRIBUTION_CHANNEL
-    //     {
-    //         @title : 'Code'
-    //         CD_DISTRIBUTION_CHANNEL.DistributionChannelId as Code,
+    @title : 'Distribution Channel View'
+    view DistributionChannelView as
+        select from CD_DISTRIBUTION_CHANNEL
+        {
+            @title : 'Code'
+            CD_DISTRIBUTION_CHANNEL.DistributionChannelId as Code,
 
-    //         @title : 'Text'
-    //         CD_DISTRIBUTION_CHANNEL.DistributionChannel   as Text
-    //     };
+            @title : 'Text'
+            CD_DISTRIBUTION_CHANNEL.DistributionChannel   as Text
+        };
 };

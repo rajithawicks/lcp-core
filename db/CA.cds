@@ -1,4 +1,4 @@
-using Core;
+using { Core as Core } from './Core';
 
 context CA {
     @title : 'Message Class Text'

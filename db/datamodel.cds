@@ -1,3 +1,7 @@
+using {Core as Core} from './Core';
+using {CV as CV} from './CV';
+
+
 @cds.persistence.exists
 @cds.persistence.calcview
 entity CD_DISTRIBUTION_CHANNEL {
@@ -269,4 +273,39 @@ entity Region {
     CountryId : String(3);
     RegionId  : String(3);
     Region    : String(20);
+}
+
+@cds.persistence.exists
+@cds.persistence.calcview
+entity CD_RULE_CONDITION_HIERARCHY {
+
+    key NodeId                                     : Core.UuidT;
+        ConditionFrom                              : Core.ConditionRangeValueT;
+        ConditionTo                                : Core.ConditionRangeValueT;
+        Value                                      : Core.ValueT;
+        RuleId                                     : Core.RuleIdT;
+        EventTypeId                                : Core.EventTypeIdT;
+        SalesOrganizationId                        : Core.SalesOrganizationIdT;
+        SalesOrganization                          : String(20);
+        DistributionChannelId                      : Core.DistributionChannelIdT;
+        EVENTTYPE                                  : Core.DescriptionT;
+        DistributionChannel                        : String(40);
+        DimensionId                                : Core.DimensionIdT;
+        RULE                                       : Core.DescriptionT;
+        ROUNDINGPROFILEID                          : Core.ProfileIdT;
+        ROUNDINGPROFILE                            : Core.ProfileValueT;
+        VALIDFROM                                  : Core.DateT;
+        VALIDTO                                    : Core.DateT;
+        DIMENSION                                  : Core.DescriptionT;
+        DIMENSIONS                                 : String(5000);
+        HASVALUE                                   : Core.BooleanFlagT;
+        ISPERCENTAGE                               : Core.BooleanFlagT;
+        ParentNodeId                               : String(32);
+        Level                                      : Integer;
+        DrillDownState                             : String(14);
+        Assoc_RuleConditionToEventRuleConditionSet : Association to many CV.EventRuleConditionView
+                                                         on Assoc_RuleConditionToEventRuleConditionSet.RuleConditionUuid = NodeId;
+
+        Assoc_RuleConditionToEventRuleDimensionSet : Association to many CV.EventRuleDimensionView
+                                                         on Assoc_RuleConditionToEventRuleDimensionSet.RuleConditionUuid = NodeId;
 }
