@@ -1,4 +1,4 @@
-VIEW "IV.MultiChannelSaleView"(
+VIEW "MULTICHANNELSALEVIEW"(
 	"ProductId",
 	"LocationId",
 	"BaseUnitOfMeasureId",

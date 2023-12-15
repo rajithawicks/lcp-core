@@ -1,0 +1,4 @@
+"use strict";
+var PRICING_RULE_ENGINE = "PRE";
+
+module.exports.PRICING_RULE_ENGINE = PRICING_RULE_ENGINE;

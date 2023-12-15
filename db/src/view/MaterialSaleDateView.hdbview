@@ -1,4 +1,4 @@
-VIEW "IV.MaterialSaleDateView"(
+VIEW "MATERIALSALEDATEVIEW"(
 	"MaterialId",
 	"SalesOrganizationId",
 	"DistributionChannelId",

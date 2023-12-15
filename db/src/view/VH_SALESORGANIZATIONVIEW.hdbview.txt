@@ -1,4 +1,4 @@
-VIEW "VH.SalesOrganizationView"(
+VIEW "VH_SALESORGANIZATIONVIEW"(
 	"Code",
 	"Text") AS
 		SELECT 

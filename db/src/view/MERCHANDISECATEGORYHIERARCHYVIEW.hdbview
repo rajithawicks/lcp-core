@@ -1,4 +1,4 @@
-VIEW "IV.MerchandiseCategoryHierarchyView"(
+VIEW "MERCHANDISECATEGORYHIERARCHYVIEW"(
 	"MaterialGroupId",
 	"MaterialGroupHierNode2Text",
 	"MaterialGroupHierNode2Name",

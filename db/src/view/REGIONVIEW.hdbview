@@ -1,4 +1,4 @@
-VIEW "IV.RegionView"(
+VIEW "REGIONVIEW"(
 	"RegionId",
 	"Region") AS
 		SELECT DISTINCT 

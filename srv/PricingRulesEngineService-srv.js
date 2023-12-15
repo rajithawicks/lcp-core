@@ -1,4 +1,7 @@
+//rajithaw
 const cds = require('@sap/cds');
+
+var MessageClassId = require("./MessageClassId.js");
 
 var result, val1;
 module.exports = srv => {
@@ -421,6 +424,80 @@ module.exports = srv => {
             //const { LocationId } = req.data;
 
             result = await MessageTypeMaintenanceSet_onBeforeDelete(req);
+            return result;
+        } catch (error) {
+
+            return error.message;
+        }
+    });
+
+    //*********for  SystemMessageSet */
+
+    srv.on('CREATE', 'SystemMessageSet', async (req, res) => {
+        try {
+            //const { LocationId } = req.data;
+
+            result = await SystemMessageSet_onCreate(req);
+            return result;
+        } catch (error) {
+
+            return error.message;
+        }
+    });
+
+    srv.before('CREATE', 'SystemMessageSet', async (req, res) => {
+        try {
+            //const { LocationId } = req.data;
+
+            result = await SystemMessageSet_onBeforeCreate(req);
+            return result;
+        } catch (error) {
+
+            return error.message;
+        }
+    });
+
+    srv.on('UPDATE', 'SystemMessageSet', async (req, res) => {
+        try {
+            //const { LocationId } = req.data;
+
+            result = await SystemMessageSet_onUpdate(req);
+            return result;
+        } catch (error) {
+
+            return error.message;
+        }
+    });
+
+    srv.before('UPDATE', 'SystemMessageSet', async (req, res) => {
+        try {
+            //const { LocationId } = req.data;
+
+            result = await SystemMessageSet_onBeforeUpdate(req);
+            return result;
+        } catch (error) {
+
+            return error.message;
+        }
+    });
+
+    srv.on('DELETE', 'SystemMessageSet', async (req, res) => {
+        try {
+            //const { LocationId } = req.data;
+
+            result = await SystemMessageSet_onDelete(req);
+            return result;
+        } catch (error) {
+
+            return error.message;
+        }
+    });
+
+    srv.before('DELETE', 'SystemMessageSet', async (req, res) => {
+        try {
+            //const { LocationId } = req.data;
+
+            result = await SystemMessageSet_onBeforeDelete(req);
             return result;
         } catch (error) {
 
@@ -1829,5 +1906,281 @@ var MessageTypeMaintenanceSet_onBeforeDelete = async function (req) {
 
     //vesta commented till its sorted
     //return oCoreUtility.executeBeforeDeleteProcess(oValidationRule, null, oParam);
+
+}
+
+var SystemMessageSet_onCreate = async function (req) {
+
+    try {
+        //vesta commented till its sorted
+        // var oConnection = $.hdb.getConnection();
+        // var oEntityData = oCoreUtility.getEntityData(oParam.connection, oParam.afterTableName);
+
+        // var oCreateSystemMessage = oConnection.loadProcedure(
+        // 	"maintain_system_message");
+
+        // var aResults = oCreateSystemMessage(oEntityData.RuleId, oEntityData.ClassId, oEntityData.LanguageKey, oEntityData.SystemMessage
+        // );
+
+        //+rajithaw
+        const { RuleId, ClassId, LanguageKey, SystemMessage } = req.data;
+        var dbQuery = ' Call "maintain_system_message"( )'
+        var aResults = await cds.run(dbQuery, { RuleId, ClassId, LanguageKey, SystemMessage })
+        //+rajithaw
+
+        var aError = [];
+        for (var sItem of aResults.ET_RETURN) {
+            aError.push({
+                type: sItem.TYPE,
+                message: sItem.MESSAGE
+            });
+        }
+
+        if (aError.length) {
+            throw aError;
+        }
+
+        //vesta commented till its sorted
+        // oEntityData.MessageTypeUuid = aResults.EV_NEW_MESSAGETYPEUUID;
+        // oCoreUtility.updateTemporaryTable(oParam.connection, oParam.afterTableName, oEntityData);
+    } catch (oErrorMessage) {
+        throw oErrorMessage;
+    }
+
+}
+
+var SystemMessageSet_onBeforeCreate = async function (req) {
+
+    var oValidationRule = {
+        "00": [{
+            "RuleId": [{
+                MandatoryCheck: true
+            }, {
+                ExistenceCheck: {
+                    CheckTable: "PR_PRICINGRULE",
+                    FieldToCheck: "RULEID"
+                }
+            }]
+        }, {
+            "ClassId": {
+                MandatoryCheck: true
+            }
+        }, {
+            "SystemMessage": {
+                MandatoryCheck: true
+            }
+        }]
+    };
+
+    var aEntityUpdateRule = [{
+        "Rule": {
+            InitialValue: ""
+        }
+    }, {
+        "ClassId": {
+            InitialValue: MessageClassId.PRICING_RULE_ENGINE
+        }
+    }, {
+        "MessageNumber": {
+            DefaultValue: ""
+        }
+    }, {
+        "RuleTypeId": {
+            DefaultValue: ""
+        }
+    }, {
+        "RuleType": {
+            InitialValue: ""
+        }
+    }, {
+        "LanguageKey": {
+            //vesta commented till its sorted
+            "EN"//InitialValue: oRuntimeUtility.getDefaultLanguage()
+		}
+    }, {
+        "Priority": {
+            DefaultValue: ""
+        }
+    }];
+
+    //vesta commented till its sorted
+    //return oCoreUtility.executeBeforeCreateProcess(oValidationRule, aEntityUpdateRule, oParam);
+}
+
+var SystemMessageSet_onUpdate = async function (req) {
+
+    //vesta commented till its sorted
+    // var oConnection = $.hdb.getConnection();
+    // var oEntityData = oCoreUtility.getEntityData(oParam.connection, oParam.afterTableName);
+
+    try {
+        // var oUpdateSystemMessage = oConnection.loadProcedure(
+        // 	"maintain_system_message");
+
+        // var aResults = oUpdateSystemMessage(oEntityData.RuleId, oEntityData.ClassId, oEntityData.LanguageKey, oEntityData.SystemMessage
+        // );
+
+        //+rajithaw
+        const { RuleId, ClassId, LanguageKey, SystemMessage } = req.data;
+        var dbQuery = ' Call "maintain_system_message"( )'
+        var aResults = await cds.run(dbQuery, { RuleId, ClassId, LanguageKey, SystemMessage })
+        //+rajithaw
+
+
+        var aError = [];
+        for (var sItem of aResults.ET_RETURN) {
+            aError.push({
+                type: sItem.TYPE,
+                message: sItem.MESSAGE
+            });
+        }
+
+        if (aError.length) {
+            throw aError;
+        }
+    } catch (oError) {
+        throw oError;
+    }
+
+}
+
+var SystemMessageSet_onBeforeUpdate = async function (req) {
+
+    var oValidationRule = {
+        "00": [{
+            "RuleId": [{
+                MandatoryCheck: true
+            }, {
+                ExistenceCheck: {
+                    CheckTable: "PR_PRICINGRULE",
+                    FieldToCheck: "RULEID"
+                }
+            }]
+        }, {
+            "ClassId": {
+                MandatoryCheck: true
+            }
+        }, {
+            "SystemMessage": {
+                MandatoryCheck: true
+            }
+        }]
+    };
+
+    var aEntityUpdateRule = [{
+        "RuleId": {
+            DefaultValue: ""
+        }
+    }, {
+        "Rule": {
+            DefaultValue: ""
+        }
+    }, {
+        "ClassId": {
+            DefaultValue: MessageClassId.PRICING_RULE_ENGINE
+        }
+    }, {
+        "MessageNumber": {
+            DefaultValue: ""
+        }
+    }, {
+        "RuleTypeId": {
+            DefaultValue: ""
+        }
+    }, {
+        "RuleType": {
+            DefaultValue: ""
+        }
+    }, {
+        "LanguageKey": {
+            //vesta commented till its sorted
+            "EN"//InitialValue: oRuntimeUtility.getDefaultLanguage()
+		}
+    }, {
+        "SystemMessage": {
+            DefaultValue: ""
+        }
+    }, {
+        "Priority": {
+            DefaultValue: ""
+        }
+    }];
+
+    //vesta commented till its sorted
+    // return oCoreUtility.executeBeforeUpdateProcess(oValidationRule, aEntityUpdateRule, oParam);
+}
+
+var SystemMessageSet_onDelete = async function (req) {
+
+    //vesta commented till its sorted
+    // var oStatement;
+    // var oEntityData = oCoreUtility.getEntityData(oParam.connection, oParam.beforeTableName);
+
+    try {
+        // oStatement = oParam.connection.prepareStatement(
+        // 	"DELETE FROM \"CA.MessageClassText\" WHERE \"CLASSID\"=? AND \"MESSAGENUMBER\"=?"
+        // );
+        // oStatement.setString(1, oEntityData.ClassId);
+        // oStatement.setString(2, oEntityData.MessageNumber);
+        // oStatement.executeUpdate();
+
+        //+rajithaw{
+        const { ClassId, MessageNumber } = req.data;
+         await cds.run('DELETE FROM \"CA_MESSAGECLASSTEXT\" WHERE \"CLASSID\"=? AND \"MESSAGENUMBER\"=?', [ClassId, MessageNumber]);
+        //+rajithaw}
+
+        // Remove MESSAGENUMBER value from PricingRule in order to delete linkage
+        // oEntityData.MessageNumber = '';
+        // oStatement = oParam.connection.prepareStatement(
+        //     "UPDATE \"PR.PricingRule\" SET \"MESSAGENUMBER\"=? WHERE \"RULEID\"=? "
+        // );
+        // oStatement.setString(1, oEntityData.MessageNumber);
+        // oStatement.setString(2, oEntityData.RuleId);
+        // oStatement.executeUpdate();
+        // oStatement.close();
+
+        //+rajithaw{
+        const { RuleId } = req.data;
+        await cds.run('UPDATE \"PR._PRICINGRULE\" SET \"MESSAGENUMBER\"=? WHERE \"RULEID\"=?', ['', RuleId]);
+        //+rajithaw}
+
+    } catch (oError) {
+        throw oError;
+        //vesta commented till its sorted
+        //throw oCoreUtility.convertError(oError);
+    }
+
+}
+
+var SystemMessageSet_onBeforeDelete = async function (req) {
+
+    var oValidationRule = {
+		"00": [{
+			"RuleId": [{
+				MandatoryCheck: true
+			}, {
+				ExistenceCheck: {
+					CheckTable: "PR_PRICINGRULE",
+					FieldToCheck: "RULEID"
+				}
+			}]
+		}, {			
+			"ClassId": {
+				MandatoryCheck: true
+			}
+		}, {
+			"MessageNumber": [{
+				MandatoryCheck: true
+			}, {
+				ExistenceCheck: {
+					CheckTable: "CA_MESSAGECLASSTEXT",
+					FieldToCheck: "MESSAGENUMBER"
+				}
+			}]
+		}]
+	};
+
+    //vesta commented till its sorted
+	//return oCoreUtility.executeBeforeDeleteProcess(oValidationRule, null, oParam);
 
 }

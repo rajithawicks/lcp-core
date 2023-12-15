@@ -1,14 +1,14 @@
 using {
-    MultiChannelSale             as MultiChannelSale,
-    MaterialSaleDate             as MaterialSaleDate,
-    InventoryVisibility          as InventoryVisibility,
+    MULTICHANNELSALEVIEW             as MULTICHANNELSALEVIEW,
+    MATERIALSALEDATEVIEW         as MATERIALSALEDATEVIEW,
+    INVENTORYVISIBILITYVIEW      as INVENTORYVISIBILITYVIEW,
     Material                     as Material,
     MaterialGroup                as MaterialGroup,
-    RetailPrice                  as RetailPrice,
-    MerchandiseCategoryHierarchy as MerchandiseCategoryHierarchy,
-    SalesOrganization            as SalesOrganization,
-    DistributionChannel          as DistributionChannel,
-    Region                       as Region
+    RETAILPRICEVIEW                  as RETAILPRICEVIEW,
+    MERCHANDISECATEGORYHIERARCHYVIEW as MERCHANDISECATEGORYHIERARCHYVIEW,
+    SALESORGANIZATIONVIEW            as SALESORGANIZATIONVIEW,
+    DISTRIBUTIONCHANNELVIEW      as DISTRIBUTIONCHANNELVIEW,
+    REGIONVIEW                   as REGIONVIEW
 
 } from './datamodel';
 
@@ -31,108 +31,108 @@ view MaterialView as
         Material.SAPClient = '100';
 
 view MerchandiseCategoryHierarchyView as
-    select from MerchandiseCategoryHierarchy
+    select from MERCHANDISECATEGORYHIERARCHYVIEW
     {
-        MerchandiseCategoryHierarchy.MaterialGroupId            as MaterialGroupId,
-        MerchandiseCategoryHierarchy.MaterialGroupHierNode2Text as MaterialGroupHierNode2Text,
-        MerchandiseCategoryHierarchy.MaterialGroupHierNode2Name as MaterialGroupHierNode2Name,
-        MerchandiseCategoryHierarchy.MaterialGroupHierNode3Text as MaterialGroupHierNode3Text,
-        MerchandiseCategoryHierarchy.MaterialGroupHierNode3Name as MaterialGroupHierNode3Name
+        MERCHANDISECATEGORYHIERARCHYVIEW.MaterialGroupId            as MaterialGroupId,
+        MERCHANDISECATEGORYHIERARCHYVIEW.MaterialGroupHierNode2Text as MaterialGroupHierNode2Text,
+        MERCHANDISECATEGORYHIERARCHYVIEW.MaterialGroupHierNode2Name as MaterialGroupHierNode2Name,
+        MERCHANDISECATEGORYHIERARCHYVIEW.MaterialGroupHierNode3Text as MaterialGroupHierNode3Text,
+        MERCHANDISECATEGORYHIERARCHYVIEW.MaterialGroupHierNode3Name as MaterialGroupHierNode3Name
     }
     where
-        MerchandiseCategoryHierarchy.SAPClient = '100';
+        MERCHANDISECATEGORYHIERARCHYVIEW.SAPClient = '100';
 
 view InventoryVisibilityView as
-    select from InventoryVisibility
+    select from INVENTORYVISIBILITYVIEW
     {
-        InventoryVisibility.ProductId                                        as ProductId,
-        InventoryVisibility.LocationId                                       as LocationId,
-        InventoryVisibility.CurrentStock                                     as CurrentStock,
-        InventoryVisibility.OnOrderStockQuantity                             as OnOrderStockQuantity,
-        InventoryVisibility.CostPerStockUnit                                 as CostPerStockUnit,
-        InventoryVisibility.CurrentStockValuatedAtCostValueInCompanyCurrency as CurrentStockValuatedAtCostValueInCompanyCurrency
+        INVENTORYVISIBILITYVIEW.ProductId                                        as ProductId,
+        INVENTORYVISIBILITYVIEW.LocationId                                       as LocationId,
+        INVENTORYVISIBILITYVIEW.CurrentStock                                     as CurrentStock,
+        INVENTORYVISIBILITYVIEW.OnOrderStockQuantity                             as OnOrderStockQuantity,
+        INVENTORYVISIBILITYVIEW.CostPerStockUnit                                 as CostPerStockUnit,
+        INVENTORYVISIBILITYVIEW.CurrentStockValuatedAtCostValueInCompanyCurrency as CurrentStockValuatedAtCostValueInCompanyCurrency
     }
     where
-        InventoryVisibility.SAPClient = '100';
+        INVENTORYVISIBILITYVIEW.SAPClient = '100';
 
 view RetailPriceView as
-    select from RetailPrice
+    select from RETAILPRICEVIEW
     {
-        RetailPrice.MaterialId            as MaterialId,
-        RetailPrice.PlantId               as PlantId,
-        RetailPrice.SalesOrganizationId   as SalesOrganizationId,
-        RetailPrice.DistributionChannelId as DistributionChannelId,
-        RetailPrice.RetailPrice           as RetailPrice,
-        RetailPrice.CurrencyKey           as CurrencyKey,
-        RetailPrice.UnitOfMeasureId       as UnitOfMeasureId
+        RETAILPRICEVIEW.MaterialId            as MaterialId,
+        RETAILPRICEVIEW.PlantId               as PlantId,
+        RETAILPRICEVIEW.SalesOrganizationId   as SalesOrganizationId,
+        RETAILPRICEVIEW.DistributionChannelId as DistributionChannelId,
+        RETAILPRICEVIEW.RetailPrice           as RetailPrice,
+        RETAILPRICEVIEW.CurrencyKey           as CurrencyKey,
+        RETAILPRICEVIEW.UnitOfMeasureId       as UnitOfMeasureId
     }
     where
-        RetailPrice.SAPClient = '100';
+        RETAILPRICEVIEW.SAPClient = '100';
 
 view MaterialSaleDateView as
-    select from MaterialSaleDate
+    select from MATERIALSALEDATEVIEW
     {
-        MaterialSaleDate.MaterialId            as MaterialId,
-        MaterialSaleDate.SalesOrganizationId   as SalesOrganizationId,
-        MaterialSaleDate.DistributionChannelId as DistributionChannelId,
-        MaterialSaleDate.EarliestSaleDate      as EarliestSaleDate,
-        MaterialSaleDate.LatestSaleDate        as LatestSaleDate
+        MATERIALSALEDATEVIEW.MaterialId            as MaterialId,
+        MATERIALSALEDATEVIEW.SalesOrganizationId   as SalesOrganizationId,
+        MATERIALSALEDATEVIEW.DistributionChannelId as DistributionChannelId,
+        MATERIALSALEDATEVIEW.EarliestSaleDate      as EarliestSaleDate,
+        MATERIALSALEDATEVIEW.LatestSaleDate        as LatestSaleDate
     }
     where
-        MaterialSaleDate.SAPClient = '100';
+        MATERIALSALEDATEVIEW.SAPClient = '100';
 
 view MultiChannelSaleView as
-    select from MultiChannelSale
+    select from MULTICHANNELSALEVIEW
     {
-        MultiChannelSale.ProductId                               as ProductId,
-        MultiChannelSale.LocationId                              as LocationId,
-        MultiChannelSale.BaseUnit                                as BaseUnitOfMeasureId,
-        sum(MultiChannelSale.FourWeekSalesQuantityInBaseUnit)    as FourWeekSalesQuantityInBaseUnit,
-        sum(MultiChannelSale.FourWeekSalesQuantityInSalesUnit)   as FourWeekSalesQuantityInSalesUnit,
-        sum(MultiChannelSale.SalesQuantityInBaseUnit)            as SalesQuantityInBaseUnit,
-        sum(MultiChannelSale.SalesQuantityInSalesUnit)           as SalesQuantityInSalesUnit,
-        sum(MultiChannelSale.FourWeekNetSalesAmount)             as FourWeekNetSalesAmount,
-        sum(MultiChannelSale.NetSalesAmount)                     as NetSalesAmount,
-        sum(MultiChannelSale.NetSalesAmount) - sum(MultiChannelSale.CostAmount_E) as GrossMargin,
+        MULTICHANNELSALEVIEW.ProductId                               as ProductId,
+        MULTICHANNELSALEVIEW.LocationId                              as LocationId,
+        MULTICHANNELSALEVIEW.BaseUnit                                as BaseUnitOfMeasureId,
+        sum(MULTICHANNELSALEVIEW.FourWeekSalesQuantityInBaseUnit)    as FourWeekSalesQuantityInBaseUnit,
+        sum(MULTICHANNELSALEVIEW.FourWeekSalesQuantityInSalesUnit)   as FourWeekSalesQuantityInSalesUnit,
+        sum(MULTICHANNELSALEVIEW.SalesQuantityInBaseUnit)            as SalesQuantityInBaseUnit,
+        sum(MULTICHANNELSALEVIEW.SalesQuantityInSalesUnit)           as SalesQuantityInSalesUnit,
+        sum(MULTICHANNELSALEVIEW.FourWeekNetSalesAmount)             as FourWeekNetSalesAmount,
+        sum(MULTICHANNELSALEVIEW.NetSalesAmount)                     as NetSalesAmount,
+        sum(MULTICHANNELSALEVIEW.NetSalesAmount) - sum(MULTICHANNELSALEVIEW.CostAmount_E) as GrossMargin,
         case
-            when sum(MultiChannelSale.NetSalesAmount) > 0 then((sum(MultiChannelSale.NetSalesAmount) -sum(MultiChannelSale.CostAmount_E)) / sum(MultiChannelSale.NetSalesAmount)) * 100
+            when sum(MULTICHANNELSALEVIEW.NetSalesAmount) > 0 then((sum(MULTICHANNELSALEVIEW.NetSalesAmount) -sum(MULTICHANNELSALEVIEW.CostAmount_E)) / sum(MULTICHANNELSALEVIEW.NetSalesAmount)) * 100
             else                              0
         end                                     as GrossMarginPercent
     }
     where
-        MultiChannelSale.SAPClient = '100'
+        MULTICHANNELSALEVIEW.SAPClient = '100'
     group by
-        MultiChannelSale.ProductId,
-        MultiChannelSale.LocationId,
-        MultiChannelSale.BaseUnit;
+        MULTICHANNELSALEVIEW.ProductId,
+        MULTICHANNELSALEVIEW.LocationId,
+        MULTICHANNELSALEVIEW.BaseUnit;
 
 view SalesOrganizationView as
-    select from SalesOrganization distinct
+    select from SALESORGANIZATIONVIEW distinct
     {
-        SalesOrganization.SalesOrganizationId as SalesOrganizationId,
-        SalesOrganization.SalesOrganization   as SalesOrganization
+        SALESORGANIZATIONVIEW.SalesOrganizationId as SalesOrganizationId,
+        SALESORGANIZATIONVIEW.SalesOrganization   as SalesOrganization
     }
     where
-        SalesOrganization.SAPClient = '100';
+        SALESORGANIZATIONVIEW.SAPClient = '100';
 
 view DistributionChannelView as
-    select from DistributionChannel distinct
+    select from DISTRIBUTIONCHANNELVIEW distinct
     {
-        DistributionChannel.DistributionChannelId as DistributionChannelId,
-        DistributionChannel.DistributionChannel   as DistributionChannel
+        DISTRIBUTIONCHANNELVIEW.DISTRIBUTIONCHANNELID as DistributionChannelId,
+        DISTRIBUTIONCHANNELVIEW.DISTRIBUTIONCHANNEL   as DistributionChannel
     }
     where
-        DistributionChannel.SAPClient = '100';
+        DISTRIBUTIONCHANNELVIEW.SAPCLIENT = '100';
 
 view RegionView as
-    select from Region distinct
+    select from REGIONVIEW distinct
     {
-        Region.RegionId as RegionId,
-        Region.Region   as Region
+        REGIONVIEW.RegionId as RegionId,
+        REGIONVIEW.Region   as Region
     }
     where
-            Region.SAPClient = '100'
-        and Region.CountryId = 'US';
+            REGIONVIEW.SAPClient = '100'
+        and REGIONVIEW.CountryId = 'US';
 
 // @title : 'Planned Margin Access Sequence view'
 view PlannedMarginAccessSequenceView as

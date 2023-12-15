@@ -13,13 +13,7 @@
 			"database": "H00"
 		}
 	},
-	// "DISTRIBUTIONCHANNEL": {
-	// 	"target": {
-	// 		"object": "rizing.ci.lcp.s4h/DistributionChannel",
-	// 		"schema": "VIRTUAL",
-	// 		"database": "H00"
-	// 	}
-	// },
+
 	"LocationHierarchy": {
 		"target": {
 			"object": "rizing.ci.lcp.ddf_s4h/LocationHierarchy",
@@ -84,13 +78,7 @@
 			"database": "H00"
 		}
 	},
-	// "SALESORGANIZATION": {
-	// 	"target": {
-	// 		"object": "rizing.ci.lcp.s4h/SalesOrganization",
-	// 		"schema": "VIRTUAL",
-	// 		"database": "H00"
-	// 	}
-	// },
+
 	"UnitOfMeasure": {
 		"target": {
 			"object": "rizing.ci.lcp.s4h/UnitOfMeasure",
@@ -147,13 +135,7 @@
 			"database": "H00"
 		}
 	},
-	// "INVENTORYVISIBILITY": {
-	// 	"target": {
-	// 		"object": "rizing.ci.lcp.s4h/InventoryVisibility",
-	// 		"schema": "VIRTUAL",
-	// 		"database": "H00"
-	// 	}
-	// },
+
 	"InventoryVisibility": {
 		"target": {
 			"object": "rizing.ci.lcp.s4h/InventoryVisibility",

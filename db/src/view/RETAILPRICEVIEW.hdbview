@@ -1,4 +1,4 @@
-VIEW "IV.RetailPriceView"(
+VIEW "RETAILPRICEVIEW"(
 	"MaterialId",
 	"PlantId",
 	"SalesOrganizationId",

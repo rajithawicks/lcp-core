@@ -19,7 +19,7 @@ entity CD_SALES_ORGANIZATION {
 }
 
 @cds.persistence.exists
-entity MultiChannelSale {
+entity MULTICHANNELSALEVIEW {
     SAPClient                            : String(3);
     SaleDate                             : String(8);
     OrderChannelId                       : String(2);
@@ -98,7 +98,7 @@ entity MultiChannelSale {
 }
 
 @cds.persistence.exists
-entity MaterialSaleDate {
+entity MATERIALSALEDATEVIEW {
     SAPClient             : String(3);
     MaterialId            : String(40);
     SalesOrganizationId   : String(4);
@@ -110,7 +110,7 @@ entity MaterialSaleDate {
 }
 
 @cds.persistence.exists
-entity InventoryVisibility {
+entity INVENTORYVISIBILITYVIEW {
     SAPClient                                                  : String(3);
     LocationId                                                 : String(4);
     ProductId                                                  : String(40);
@@ -211,7 +211,7 @@ entity MaterialGroup {
 }
 
 @cds.persistence.exists
-entity RetailPrice {
+entity RETAILPRICEVIEW {
     SAPClient             : String(3);
     MaterialId            : String(40);
     PlantId               : String(4);
@@ -230,7 +230,7 @@ entity RetailPrice {
 }
 
 @cds.persistence.exists
-entity MerchandiseCategoryHierarchy {
+entity MERCHANDISECATEGORYHIERARCHYVIEW {
     SAPClient                  : String(3);
     RootNodeName               : String(18);
     MaterialGroupHierNode0Name : String(18);
@@ -247,7 +247,7 @@ entity MerchandiseCategoryHierarchy {
 }
 
 @cds.persistence.exists
-entity SalesOrganization {
+entity SALESORGANIZATIONVIEW {
     SAPClient                    : String(3);
     SalesOrganizationId          : String(4);
     SalesOrganization            : String(20);
@@ -261,14 +261,14 @@ entity SalesOrganization {
 }
 
 @cds.persistence.exists
-entity DistributionChannel {
-    SAPClient             : String(3);
-    DistributionChannelId : String(2);
-    DistributionChannel   : String(20);
+entity DISTRIBUTIONCHANNELVIEW {
+    SAPCLIENT             : String(3);
+    DISTRIBUTIONCHANNELID : String(2);
+    DISTRIBUTIONCHANNEL   : String(20);
 }
 
 @cds.persistence.exists
-entity Region {
+entity REGIONVIEW {
     SAPClient : String(3);
     CountryId : String(3);
     RegionId  : String(3);
@@ -308,4 +308,14 @@ entity CD_RULE_CONDITION_HIERARCHY {
 
         Assoc_RuleConditionToEventRuleDimensionSet : Association to many CV.EventRuleDimensionView
                                                          on Assoc_RuleConditionToEventRuleDimensionSet.RuleConditionUuid = NodeId;
+}
+
+@cds.persistence.exists
+@cds.persistence.calcview
+entity CD_DIMENSION {
+
+    key Dimension : String(3);
+    key Code      : String(64);
+        Text      : String(64);
+
 }

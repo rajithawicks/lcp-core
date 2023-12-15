@@ -14,7 +14,7 @@ context VH {
         select from PR.RuleTypeText
         {
             @title : 'Code'
-            RuleTypeText.RULETYPEID  as Code,
+         key   RuleTypeText.RULETYPEID  as Code,
 
             @title : 'Text'
             RuleTypeText.DESCRIPTION as Text
@@ -25,7 +25,7 @@ context VH {
         select from PR.RuleText
         {
             @title : 'Code'
-            RuleText.RULEID      as Code,
+         key   RuleText.RULEID      as Code,
 
             @title : 'Text'
             RuleText.DESCRIPTION as Text
@@ -36,7 +36,7 @@ context VH {
         select from PR.EventTypeText
         {
             @title : 'Code'
-            EventTypeText.EVENTTYPEID as Code,
+         key   EventTypeText.EVENTTYPEID as Code,
 
             @title : 'Text'
             EventTypeText.DESCRIPTION as Text
@@ -47,7 +47,7 @@ context VH {
         select from CA.MessageType
         {
             @title : 'Code'
-            MessageType.MESSAGETYPEID as Code,
+         key   MessageType.MESSAGETYPEID as Code,
 
             @title : 'Text'
             MessageType.DESCRIPTION   as Text
@@ -58,7 +58,7 @@ context VH {
         select from PR.DimensionText
         {
             @title : 'Code'
-            DimensionText.DIMENSIONID as Code,
+         key   DimensionText.DIMENSIONID as Code,
 
             @title : 'Text'
             DimensionText.DESCRIPTION as Text
@@ -69,7 +69,7 @@ context VH {
         select from PR.RoundingProfile
         {
             @title : 'Code'
-            RoundingProfile.PROFILEID as Code,
+        key    RoundingProfile.PROFILEID as Code,
 
             @title : 'Text'
             RoundingProfile.VALUE     as Text
@@ -80,7 +80,7 @@ context VH {
         select from CD_SALES_ORGANIZATION
         {
             @title : 'Code'
-            CD_SALES_ORGANIZATION.SalesOrganizationId as Code,
+         key   CD_SALES_ORGANIZATION.SalesOrganizationId as Code,
 
             @title : 'Text'
             CD_SALES_ORGANIZATION.SalesOrganization   as Text
@@ -91,7 +91,7 @@ context VH {
         select from CD_DISTRIBUTION_CHANNEL
         {
             @title : 'Code'
-            CD_DISTRIBUTION_CHANNEL.DistributionChannelId as Code,
+          key  CD_DISTRIBUTION_CHANNEL.DistributionChannelId as Code,
 
             @title : 'Text'
             CD_DISTRIBUTION_CHANNEL.DistributionChannel   as Text

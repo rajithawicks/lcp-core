@@ -1,4 +1,4 @@
-VIEW "IV.SalesOrganizationView"(
+VIEW "SALESORGANIZATIONVIEW"(
 	"SalesOrganizationId",
 	"SalesOrganization") AS
 		SELECT DISTINCT 

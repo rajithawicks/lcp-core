@@ -1,4 +1,4 @@
-VIEW "IV.InventoryVisibilityView"(
+VIEW "INVENTORYVISIBILITYVIEW"(
 	"ProductId",
 	"LocationId",
 	"CurrentStock",

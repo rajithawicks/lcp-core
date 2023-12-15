@@ -202,32 +202,32 @@ context CV {
         left outer join CA.MessageType
             on MessageTypeMaintenance.MESSAGETYPEID = MessageType.MESSAGETYPEID
         {
-            @title: 'Message Type Uuid'
-            MessageTypeMaintenance.MESSAGETYPEUUID as MessageTypeUuid,
+                @title: 'Message Type Uuid'
+            key MessageTypeMaintenance.MESSAGETYPEUUID as MessageTypeUuid,
 
-            @title: 'Rule Id'
-            MessageTypeMaintenance.RULEID          as RuleId,
+                @title: 'Rule Id'
+                MessageTypeMaintenance.RULEID          as RuleId,
 
-            @title: 'Rule Description'
-            RuleText.DESCRIPTION                   as Rule,
+                @title: 'Rule Description'
+                RuleText.DESCRIPTION                   as Rule,
 
-            @title: 'Event Type Id'
-            MessageTypeMaintenance.EVENTTYPEID     as EventTypeId,
+                @title: 'Event Type Id'
+                MessageTypeMaintenance.EVENTTYPEID     as EventTypeId,
 
-            @title: 'Event Type Description'
-            EventTypeText.DESCRIPTION              as EventType,
+                @title: 'Event Type Description'
+                EventTypeText.DESCRIPTION              as EventType,
 
-            @title: 'Valid From'
-            MessageTypeMaintenance.VALIDFROM       as ValidFrom,
+                @title: 'Valid From'
+                MessageTypeMaintenance.VALIDFROM       as ValidFrom,
 
-            @title: 'Valid To'
-            MessageTypeMaintenance.VALIDTO         as ValidTo,
+                @title: 'Valid To'
+                MessageTypeMaintenance.VALIDTO         as ValidTo,
 
-            @title: 'Message Type Id'
-            MessageTypeMaintenance.MESSAGETYPEID   as MessageTypeId,
+                @title: 'Message Type Id'
+                MessageTypeMaintenance.MESSAGETYPEID   as MessageTypeId,
 
-            @title: 'Message Type'
-            MessageType.DESCRIPTION                as MessageType
+                @title: 'Message Type'
+                MessageType.DESCRIPTION                as MessageType
         };
 
     /*
@@ -264,23 +264,23 @@ context CV {
         left outer join PR.RuleText
             on PricingRule.RULEID = RuleText.RULEID
         {
-            @title: 'Rule Id'
-            PricingRule.RULEID           as RuleId,
+                @title: 'Rule Id'
+            key PricingRule.RULEID           as RuleId,
 
-            @title: 'Rule Description'
-            RuleText.DESCRIPTION         as Rule,
+                @title: 'Rule Description'
+                RuleText.DESCRIPTION         as Rule,
 
-            @title: 'Message Number'
-            PricingRule.MESSAGENUMBER    as MessageNumber,
+                @title: 'Message Number'
+                PricingRule.MESSAGENUMBER    as MessageNumber,
 
-            @title: 'Message Class Id'
-            MessageClassText.CLASSID     as ClassId,
+                @title: 'Message Class Id'
+                MessageClassText.CLASSID     as ClassId,
 
-            @title: 'Language Key'
-            MessageClassText.LANGUAGEKEY as LanguageKey,
+                @title: 'Language Key'
+                MessageClassText.LANGUAGEKEY as LanguageKey,
 
-            @title: 'System Message'
-            MessageClassText.TEXT        as SystemMessage
+                @title: 'System Message'
+                MessageClassText.TEXT        as SystemMessage
         }
         where
                 PricingRule.MESSAGENUMBER <>     ''
@@ -418,7 +418,7 @@ context CV {
     view DimensionView as
         select from PR.DimensionText {
             @title: 'Dimension Id'
-            DimensionText.DIMENSIONID as DimensionId,
+         key   DimensionText.DIMENSIONID as DimensionId,
 
             @title: 'Description'
             DimensionText.DESCRIPTION as Description,

@@ -1,57 +1,65 @@
-_schema-version: '3.1'
-ID: com.rizing.lcp.core
+_schema-version: "3.1"
+ID: service-core
+description: A simple CAP project.
 version: 1.0.0
-description: "A simple CAP project."
+modules:
+- name: service-core-srv
+  type: nodejs
+  path: gen/srv
+  requires:
+  - name: service-core-auth
+  - name: service-core-db
+  provides:
+  - name: srv-api
+    properties:
+      srv-url: ${default-url}
+  parameters:
+    buildpack: nodejs_buildpack
+  build-parameters:
+    builder: npm
+- name: service-core-db-deployer
+  type: hdb
+  path: db
+  requires:
+  - name: service-core-db
+    properties:
+      TARGET_CONTAINER: ~{hdi-container-name}
+  - name: cross-container-service-2
+    group: SERVICE_REPLACEMENTS
+    properties:
+      key: ServiceName_1
+      service: ~{the-service-name}
+  parameters:
+    buildpack: nodejs_buildpack
+resources:
+- name: service-core-auth
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      tenant-mode: dedicated
+      xsappname: service-core-${org}-${space}
+    path: ./xs-security.json
+    service: xsuaa
+    service-plan: application
+- name: service-core-db
+  type: com.sap.xs.hdi-container
+  parameters:
+    service: hana
+    service-plan: hdi-shared
+  properties:
+    hdi-container-name: ${service-name}
+- name: cross-container-service-1
+  type: deleteme
+- name: cross-container-service-2
+  type: org.cloudfoundry.existing-service
+  parameters:
+    service-name: lcp-car-ups-new
+  properties:
+    the-service-name: ${service-name}
 parameters:
   enable-parallel-deployments: true
 build-parameters:
   before-all:
-    - builder: custom
-      commands:
-        - npx cds build --production
-modules:
-  - name: lcp-core-js
-    type: nodejs
-    path: gen/srv
-    parameters:
-      buildpack: nodejs_buildpack
-    build-parameters:
-      builder: npm
-    provides:
-      - name: srv-api # required by consumers of CAP services (e.g. approuter)
-        properties:
-          srv-url: ${default-url}
-    requires:
-      # - name: lcp-core-auth
-      - name: lcp-core-db
-      - name: lcp-uaa
-
-  - name: lcp-core-db
-    type: hdb
-    path: gen/db
-    parameters:
-      buildpack: nodejs_buildpack
-    requires:
-      - name: lcp-core-container
-      - name: lcp-car-ups
-        group: SERVICE-REPLACEMENTS
-        properties:
-          external_access: '~{service-name}'
-      
-resources:
-  - name: lcp-uaa
-    type: org.cloudfoundry.existing-service
-    parameters:
-      service-name: lcp-uaa
-  
-  - name: lcp-core-container
-    type: com.sap.xs.hdi-container
-    parameters:
-      service: hana
-      service-plan: hdi-shared
-  - name: lcp-car-ups
-    type: org.cloudfoundry.existing-service
-    parameters:
-      service-name: lcp-car-ups
-    properties:
-      service-name: '${service-name}'
+  - builder: custom
+    commands:
+    - npx cds build --production
