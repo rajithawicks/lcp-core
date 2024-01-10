@@ -190,17 +190,13 @@
       <upperLeftCorner x="722" y="406"/>
       <rectangleSize height="30" width="160"/>
     </shape>
-    <shape expanded="true" modelObjectName="Union_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="474" y="217"/>
-      <rectangleSize height="30" width="160"/>
-    </shape>
     <shape expanded="true" modelObjectName="MerchandiseHierarchy" modelObjectNameSpace="CalculationView">
       <upperLeftCorner x="512" y="406"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="ProductHierarchy" modelObjectNameSpace="CalculationView">
       <upperLeftCorner x="91" y="406"/>
-      <rectangleSize height="30" width="160"/>
+      <rectangleSize height="30" width="166"/>
     </shape>
     <shape expanded="true" modelObjectName="Location" modelObjectNameSpace="CalculationView">
       <upperLeftCorner x="925" y="407"/>
@@ -210,6 +206,10 @@
       <upperLeftCorner x="1115" y="397"/>
       <rectangleSize height="30" width="160"/>
     </shape>
-  </shapes>
+  
+    <shape expanded="true" modelObjectName="Union_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="474" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape></shapes>
 </layout>
 </Calculation:scenario>

@@ -1,8 +1,8 @@
-VIEW "IV.MaterialView"(
-	"MaterialId",
-	"Material",
-	"MaterialGroupId",
-	"MaterialSeasonCategory") AS
+VIEW "V_MATERIALVIEW"(
+	"MATERIALID",
+	"MATERIAL",
+	"MATERIALGROUPID",
+	"MATERIALSEASONCATEGORY") AS
 		SELECT 
 			"Material_$0"."MaterialId" AS "MaterialId",
 			"Material_$0"."Material" AS "Material",

@@ -1,12 +1,12 @@
-VIEW "INVENTORYVISIBILITYVIEW"(
-	"ProductId",
-	"LocationId",
-	"CurrentStock",
-	"OnOrderStockQuantity",
-	"CostPerStockUnit",
-	"CurrentStockValuatedAtCostValueInCompanyCurrency") AS
+VIEW "V_INVENTORYVISIBILITYVIEW"(
+	"PRODUCTID",
+	"LOCATIONID",
+	"CURRENTSTOCK",
+	"ONORDERSTOCKQUANTITY",
+	"COSTPERSTOCKUNIT",
+	"CURRENTSTOCKVALUATEDATCOSTVALUEINCOMPANYCURRENCY") AS
 		SELECT 
-			"InventoryVisibility_$0"."ProductId" AS "ProductId",
+			"InventoryVisibility_$0"."ProductId" AS "ProductId", 
 			"InventoryVisibility_$0"."LocationId" AS "LocationId",
 			"InventoryVisibility_$0"."CurrentStock" AS "CurrentStock",
 			"InventoryVisibility_$0"."OnOrderStockQuantity" AS "OnOrderStockQuantity",

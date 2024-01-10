@@ -1,8 +1,8 @@
-VIEW "DISTRIBUTIONCHANNELVIEW"(
-	"SAPCLIENT",
+VIEW "V_DISTRIBUTIONCHANNELVIEW"(
 	"DISTRIBUTIONCHANNELID",
 	"DISTRIBUTIONCHANNEL") AS
 		SELECT DISTINCT 
+	
 			"DistributionChannel_$0"."DistributionChannelId" AS "DistributionChannelId",
 			"DistributionChannel_$0"."DistributionChannel" AS "DistributionChannel"
 		FROM "DistributionChannel" AS "DistributionChannel_$0"

@@ -1,10 +1,10 @@
 {
-	"lcp-car-ups-new": {
-		"object_owner": {
-			"roles": ["CC_VIRTUAL"]
-		},
-		"application_user": {
-			"roles": ["CC_VIRTUAL"]
-		}
+	"CC_ACCESS3": {
+	  "object_owner" : {
+		"roles" : ["CCROLE2" ]
+	  },
+	  "application_user" : {
+		"roles" : ["CCROLE2" ]
+	  }
 	}
-}
+  }

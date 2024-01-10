@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CD_RULE_CONDITION" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<descriptions defaultDescription="CD_RULE_CONDITION"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="PR.RuleCondition">
+    <resourceUri>PR_RULECONDITION</resourceUri>
+  </DataSource>
+  <DataSource id="CD_DISTRIBUTION_CHANNEL">
+    <resourceUri>CD_DISTRIBUTION_CHANNEL</resourceUri>
+  </DataSource>
+  <DataSource id="CD_SALES_ORGANIZATION">
+    <resourceUri>CD_SALES_ORGANIZATION</resourceUri>
+  </DataSource>
+  <DataSource id="PR.RoundingProfile">
+    <resourceUri>PR_ROUNDINGPROFILE</resourceUri>
+  </DataSource>
+  <DataSource id="PR.EventTypeText">
+    <resourceUri>PR_EVENTTYPETEXT</resourceUri>
+  </DataSource>
+  <DataSource id="PR.RuleText">
+    <resourceUri>PR_RULETEXT</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1_1" cardinality="C1_1" joinType="leftOuter" optimizeJoinColumns="false" multiJoinNode="Join_1" multiJoinCentralTable="PR.RuleCondition" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="RuleConditionUuid"/>
+      <viewAttribute id="RuleId"/>
+      <viewAttribute id="EventTypeId"/>
+      <viewAttribute id="ValidFrom"/>
+      <viewAttribute id="ValidTo"/>
+      <viewAttribute id="SalesOrganizationId"/>
+      <viewAttribute id="DistributionChannelId"/>
+      <viewAttribute id="RoundingProfileId"/>
+      <viewAttribute id="DistributionChannel"/>
+      <viewAttribute id="DimensionId"/>
+      <viewAttribute id="IsPercentage"/>
+      <viewAttribute id="SALESORGANIZATIONID"/>
+      <viewAttribute id="PROFILEID"/>
+      <viewAttribute id="EVENTTYPEID"/>
+      <viewAttribute id="RULEID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="PR.RuleCondition">
+      <mapping xsi:type="Calculation:AttributeMapping" target="RuleConditionUuid" source="RULECONDITIONUUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RuleId" source="RULEID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EventTypeId" source="EVENTTYPEID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ValidFrom" source="VALIDFROM"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ValidTo" source="VALIDTO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SalesOrganizationId" source="SALESORGANIZATIONID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DistributionChannelId" source="DISTRIBUTIONCHANNELID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RoundingProfileId" source="PROFILEID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DimensionId" source="DIMENSIONID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="IsPercentage" source="ISPERCENTAGE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SALESORGANIZATIONID" source="SALESORGANIZATIONID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROFILEID" source="PROFILEID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EVENTTYPEID" source="EVENTTYPEID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RULEID" source="RULEID"/>
+    </input>
+    <input node="CD_DISTRIBUTION_CHANNEL">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DistributionChannel" source="DistributionChannel"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DistributionChannelId" source="DistributionChannelId"/>
+    </input>
+    <joinAttribute name="DistributionChannelId"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1_2" cardinality="C1_1" joinType="leftOuter" optimizeJoinColumns="false" multiJoinNode="Join_1" multiJoinCentralTable="PR.RuleCondition" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="RuleConditionUuid"/>
+      <viewAttribute id="RuleId"/>
+      <viewAttribute id="EventTypeId"/>
+      <viewAttribute id="ValidFrom"/>
+      <viewAttribute id="ValidTo"/>
+      <viewAttribute id="SalesOrganizationId"/>
+      <viewAttribute id="DistributionChannelId"/>
+      <viewAttribute id="RoundingProfileId"/>
+      <viewAttribute id="SalesOrganization"/>
+      <viewAttribute id="DistributionChannel"/>
+      <viewAttribute id="DimensionId"/>
+      <viewAttribute id="IsPercentage"/>
+      <viewAttribute id="PROFILEID"/>
+      <viewAttribute id="EVENTTYPEID"/>
+      <viewAttribute id="RULEID"/>
+      <viewAttribute hidden="true" id="JOIN$SALESORGANIZATIONID$SalesOrganizationId"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_1_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="RuleConditionUuid" source="RuleConditionUuid"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RuleId" source="RuleId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EventTypeId" source="EventTypeId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ValidFrom" source="ValidFrom"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ValidTo" source="ValidTo"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SalesOrganizationId" source="SalesOrganizationId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DistributionChannelId" source="DistributionChannelId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RoundingProfileId" source="RoundingProfileId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DistributionChannel" source="DistributionChannel"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DimensionId" source="DimensionId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="IsPercentage" source="IsPercentage"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROFILEID" source="PROFILEID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EVENTTYPEID" source="EVENTTYPEID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RULEID" source="RULEID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$SALESORGANIZATIONID$SalesOrganizationId" source="SALESORGANIZATIONID"/>
+    </input>
+    <input node="CD_SALES_ORGANIZATION">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SalesOrganization" source="SalesOrganization"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$SALESORGANIZATIONID$SalesOrganizationId" source="SalesOrganizationId"/>
+    </input>
+    <joinAttribute name="JOIN$SALESORGANIZATIONID$SalesOrganizationId"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1_3" cardinality="C1_1" joinType="leftOuter" optimizeJoinColumns="true" multiJoinNode="Join_1" multiJoinCentralTable="PR.RuleCondition" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="RuleConditionUuid"/>
+      <viewAttribute id="RuleId"/>
+      <viewAttribute id="EventTypeId"/>
+      <viewAttribute id="ValidFrom"/>
+      <viewAttribute id="ValidTo"/>
+      <viewAttribute id="SalesOrganizationId"/>
+      <viewAttribute id="DistributionChannelId"/>
+      <viewAttribute id="RoundingProfileId"/>
+      <viewAttribute id="RoundingProfile"/>
+      <viewAttribute id="SalesOrganization"/>
+      <viewAttribute id="DistributionChannel"/>
+      <viewAttribute id="DimensionId"/>
+      <viewAttribute id="IsPercentage"/>
+      <viewAttribute id="EVENTTYPEID"/>
+      <viewAttribute id="RULEID"/>
+      <viewAttribute hidden="true" id="JOIN$PROFILEID$PROFILEID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_1_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="RuleConditionUuid" source="RuleConditionUuid"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RuleId" source="RuleId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EventTypeId" source="EventTypeId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ValidFrom" source="ValidFrom"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ValidTo" source="ValidTo"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SalesOrganizationId" source="SalesOrganizationId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DistributionChannelId" source="DistributionChannelId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RoundingProfileId" source="RoundingProfileId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SalesOrganization" source="SalesOrganization"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DistributionChannel" source="DistributionChannel"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DimensionId" source="DimensionId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="IsPercentage" source="IsPercentage"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EVENTTYPEID" source="EVENTTYPEID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RULEID" source="RULEID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PROFILEID$PROFILEID" source="PROFILEID"/>
+    </input>
+    <input node="PR.RoundingProfile">
+      <mapping xsi:type="Calculation:AttributeMapping" target="RoundingProfile" source="VALUE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PROFILEID$PROFILEID" source="PROFILEID"/>
+    </input>
+    <joinAttribute name="JOIN$PROFILEID$PROFILEID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1_4" cardinality="C1_1" joinType="leftOuter" optimizeJoinColumns="false" multiJoinNode="Join_1" multiJoinCentralTable="PR.RuleCondition" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="RuleConditionUuid"/>
+      <viewAttribute id="RuleId"/>
+      <viewAttribute id="EventTypeId"/>
+      <viewAttribute id="ValidFrom"/>
+      <viewAttribute id="ValidTo"/>
+      <viewAttribute id="SalesOrganizationId"/>
+      <viewAttribute id="DistributionChannelId"/>
+      <viewAttribute id="RoundingProfileId"/>
+      <viewAttribute id="EventType"/>
+      <viewAttribute id="RoundingProfile"/>
+      <viewAttribute id="SalesOrganization"/>
+      <viewAttribute id="DistributionChannel"/>
+      <viewAttribute id="DimensionId"/>
+      <viewAttribute id="IsPercentage"/>
+      <viewAttribute id="RULEID"/>
+      <viewAttribute hidden="true" id="JOIN$EVENTTYPEID$EVENTTYPEID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_1_3">
+      <mapping xsi:type="Calculation:AttributeMapping" target="RuleConditionUuid" source="RuleConditionUuid"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RuleId" source="RuleId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EventTypeId" source="EventTypeId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ValidFrom" source="ValidFrom"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ValidTo" source="ValidTo"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SalesOrganizationId" source="SalesOrganizationId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DistributionChannelId" source="DistributionChannelId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RoundingProfileId" source="RoundingProfileId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RoundingProfile" source="RoundingProfile"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SalesOrganization" source="SalesOrganization"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DistributionChannel" source="DistributionChannel"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DimensionId" source="DimensionId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="IsPercentage" source="IsPercentage"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RULEID" source="RULEID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$EVENTTYPEID$EVENTTYPEID" source="EVENTTYPEID"/>
+    </input>
+    <input node="PR.EventTypeText">
+      <mapping xsi:type="Calculation:AttributeMapping" target="EventType" source="DESCRIPTION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$EVENTTYPEID$EVENTTYPEID" source="EVENTTYPEID"/>
+    </input>
+    <joinAttribute name="JOIN$EVENTTYPEID$EVENTTYPEID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1_5" cardinality="C1_1" joinType="leftOuter" optimizeJoinColumns="true" multiJoinNode="Join_1" multiJoinCentralTable="PR.RuleCondition" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="RuleConditionUuid"/>
+      <viewAttribute id="RuleId"/>
+      <viewAttribute id="EventTypeId"/>
+      <viewAttribute id="ValidFrom"/>
+      <viewAttribute id="ValidTo"/>
+      <viewAttribute id="SalesOrganizationId"/>
+      <viewAttribute id="DistributionChannelId"/>
+      <viewAttribute id="RoundingProfileId"/>
+      <viewAttribute id="Rule"/>
+      <viewAttribute id="EventType"/>
+      <viewAttribute id="RoundingProfile"/>
+      <viewAttribute id="SalesOrganization"/>
+      <viewAttribute id="DistributionChannel"/>
+      <viewAttribute id="DimensionId"/>
+      <viewAttribute id="IsPercentage"/>
+      <viewAttribute hidden="true" id="JOIN$RULEID$RULEID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_1_4">
+      <mapping xsi:type="Calculation:AttributeMapping" target="RuleConditionUuid" source="RuleConditionUuid"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RuleId" source="RuleId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EventTypeId" source="EventTypeId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ValidFrom" source="ValidFrom"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ValidTo" source="ValidTo"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SalesOrganizationId" source="SalesOrganizationId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DistributionChannelId" source="DistributionChannelId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RoundingProfileId" source="RoundingProfileId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EventType" source="EventType"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RoundingProfile" source="RoundingProfile"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SalesOrganization" source="SalesOrganization"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DistributionChannel" source="DistributionChannel"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DimensionId" source="DimensionId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="IsPercentage" source="IsPercentage"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$RULEID$RULEID" source="RULEID"/>
+    </input>
+    <input node="PR.RuleText">
+      <mapping xsi:type="Calculation:AttributeMapping" target="Rule" source="DESCRIPTION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$RULEID$RULEID" source="RULEID"/>
+    </input>
+    <joinAttribute name="JOIN$RULEID$RULEID"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Join_1_5">
+  <attributes>
+    <attribute id="RuleConditionUuid" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Rule Condition Uuid"/>
+      <keyMapping columnObjectName="Join_1_5" columnName="RuleConditionUuid"/>
+    </attribute>
+    <attribute id="RuleId" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Rule Id"/>
+      <keyMapping columnObjectName="Join_1_5" columnName="RuleId"/>
+    </attribute>
+    <attribute id="Rule" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Description"/>
+      <keyMapping columnObjectName="Join_1_5" columnName="Rule"/>
+    </attribute>
+    <attribute id="EventTypeId" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Event Type Id"/>
+      <keyMapping columnObjectName="Join_1_5" columnName="EventTypeId"/>
+    </attribute>
+    <attribute id="EventType" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Description"/>
+      <keyMapping columnObjectName="Join_1_5" columnName="EventType"/>
+    </attribute>
+    <attribute id="SalesOrganizationId" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Sales Organization ID"/>
+      <keyMapping columnObjectName="Join_1_5" columnName="SalesOrganizationId"/>
+    </attribute>
+    <attribute id="SalesOrganization" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SalesOrganization"/>
+      <keyMapping columnObjectName="Join_1_5" columnName="SalesOrganization"/>
+    </attribute>
+    <attribute id="DistributionChannelId" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Distribution Channel ID"/>
+      <keyMapping columnObjectName="Join_1_5" columnName="DistributionChannelId"/>
+    </attribute>
+    <attribute id="DistributionChannel" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DistributionChannel"/>
+      <keyMapping columnObjectName="Join_1_5" columnName="DistributionChannel"/>
+    </attribute>    
+    <attribute id="RoundingProfileId" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Rounding Profile"/>    
+      <keyMapping columnObjectName="Join_1_5" columnName="RoundingProfileId"/>    
+    </attribute>
+    <attribute id="RoundingProfile" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Value"/>
+      <keyMapping columnObjectName="Join_1_5" columnName="RoundingProfile"/>
+    </attribute>
+    <attribute id="ValidFrom" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Validity From"/>
+      <keyMapping columnObjectName="Join_1_5" columnName="ValidFrom"/>
+    </attribute>
+    <attribute id="ValidTo" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Validity To"/>
+      <keyMapping columnObjectName="Join_1_5" columnName="ValidTo"/>
+    </attribute>    
+  
+    <attribute id="DimensionId" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Dimension Id"/>    
+  
+      <keyMapping columnObjectName="Join_1_5" columnName="DimensionId"/>    
+  
+    </attribute>
+  
+    <attribute id="IsPercentage" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Is Percentage"/>
+      <keyMapping columnObjectName="Join_1_5" columnName="IsPercentage"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="100" y="191"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="PR.RuleText" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="2645" y="-168"/>
+      <rectangleSize width="169"/>
+    </shape>
+    <shape modelObjectName="PR.EventTypeText" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="2645" y="-46"/>
+      <rectangleSize width="169"/>
+    </shape>
+    <shape modelObjectName="PR.RoundingProfile" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="2711" y="137"/>
+      <rectangleSize width="177"/>
+    </shape>
+    <shape modelObjectName="CD_SALES_ORGANIZATION" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="1908" y="-156"/>
+      <rectangleSize width="226"/>
+    </shape>
+    <shape modelObjectName="PR.RuleCondition" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="2194" y="-161"/>
+      <rectangleSize width="227"/>
+    </shape>
+    <shape modelObjectName="CD_DISTRIBUTION_CHANNEL" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="1895" y="-27"/>
+      <rectangleSize width="238"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

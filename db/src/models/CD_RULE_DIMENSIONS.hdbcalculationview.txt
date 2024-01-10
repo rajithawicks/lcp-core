@@ -4,7 +4,7 @@
 <localVariables/>
 <variableMappings/>
 <dataSources>
-  <DataSource id="PR_DIMENSIONTEXT">
+  <DataSource id="PR.DimensionText">
     <resourceUri>PR_DIMENSIONTEXT</resourceUri>
   </DataSource>
   <DataSource id="CD_RULE_CONDITION">
@@ -13,115 +13,121 @@
 </dataSources>
 <snapshotProcedures/>
 <calculationViews>
-  <calculationView xsi:type="Calculation:TableFunctionView" id="TABLEFUNCTION_1" tableFunctionName="GET_DIMENSIONS">
+  <calculationView xsi:type="Calculation:TableFunctionView" id="TableFunction_1" tableFunctionName="get_dimensions">
+    <viewAttributes/>
+    <calculatedViewAttributes/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
     <viewAttributes/>
     <calculatedViewAttributes/>
   </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="Join_1_1" cardinality="C1_1" joinType="leftOuter" optimizeJoinColumns="true" multiJoinNode="Join_1" multiJoinCentralTable="CD_RULE_CONDITION" multiJoinOrder="Outside In">
     <viewAttributes>
-      <viewAttribute id="DIMENSIONVALUES"/>
+      <viewAttribute id="DimensionValues"/>
       <viewAttribute id="DimensionId"/>
-      <viewAttribute id="DIMENSION"/>
-      <viewAttribute id="HASVALUE"/>
-      <viewAttribute id="DIMENSIONID"/>
+      <viewAttribute id="Dimension"/>
+      <viewAttribute id="HasValue"/>
       <viewAttribute id="RULECONDITIONUUID"/>
+      <viewAttribute id="DIMENSIONID"/>
       <viewAttribute hidden="true" id="JOIN$DIMENSIONID$DIMENSIONID"/>
     </viewAttributes>
     <calculatedViewAttributes/>
-    <input node="TABLEFUNCTION_1">
-      <mapping xsi:type="Calculation:AttributeMapping" target="DIMENSIONVALUES" source="DIMENSIONVALUE"/>
+    <input node="TableFunction_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DimensionValues" source="DIMENSIONVALUE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="DimensionId" source="DIMENSIONID"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="DIMENSIONID" source="DIMENSIONID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="RULECONDITIONUUID" source="RULECONDITIONUUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DIMENSIONID" source="DIMENSIONID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DIMENSIONID$DIMENSIONID" source="DIMENSIONID"/>
     </input>
-    <input node="PR_DIMENSIONTEXT">
-      <mapping xsi:type="Calculation:AttributeMapping" target="DIMENSION" source="DESCRIPTION"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="HASVALUE" source="HASVALUE"/>
+    <input node="PR.DimensionText">
+      <mapping xsi:type="Calculation:AttributeMapping" target="Dimension" source="DESCRIPTION"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HasValue" source="HASVALUE"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DIMENSIONID$DIMENSIONID" source="DIMENSIONID"/>
     </input>
     <joinAttribute name="JOIN$DIMENSIONID$DIMENSIONID"/>
   </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="Join_1_2" cardinality="C1_1" joinType="leftOuter" multiJoinNode="Join_1" multiJoinCentralTable="CD_RULE_CONDITION" multiJoinOrder="Outside In">
     <viewAttributes>
-      <viewAttribute id="DIMENSIONVALUES"/>
+      <viewAttribute id="DimensionValues"/>
       <viewAttribute id="DimensionId"/>
-      <viewAttribute id="DIMENSION"/>
-      <viewAttribute id="HASVALUE"/>
-      <viewAttribute id="DIMENSIONID"/>
+      <viewAttribute id="Dimension"/>
+      <viewAttribute id="HasValue"/>
       <viewAttribute id="RULECONDITIONUUID"/>
+      <viewAttribute id="DIMENSIONID"/>
+      <viewAttribute id="RuleConditionUuid"/>
       <viewAttribute id="RuleId"/>
-      <viewAttribute id="RULE"/>
+      <viewAttribute id="Rule"/>
       <viewAttribute id="EventTypeId"/>
-      <viewAttribute id="EVENTTYPE"/>
+      <viewAttribute id="EventType"/>
       <viewAttribute id="SalesOrganizationId"/>
       <viewAttribute id="SalesOrganization"/>
       <viewAttribute id="DistributionChannelId"/>
       <viewAttribute id="DistributionChannel"/>
-      <viewAttribute id="ROUNDINGPROFILEID"/>
-      <viewAttribute id="ROUNDINGPROFILE"/>
-      <viewAttribute id="VALIDFROM"/>
-      <viewAttribute id="VALIDTO"/>
-      <viewAttribute id="ISPERCENTAGE"/>
-      <viewAttribute hidden="true" id="JOIN$RULECONDITIONUUID$RULECONDITIONUUID"/>
+      <viewAttribute id="RoundingProfileId"/>
+      <viewAttribute id="RoundingProfile"/>
+      <viewAttribute id="ValidFrom"/>
+      <viewAttribute id="ValidTo"/>
+      <viewAttribute id="IsPercentage"/>
+      <viewAttribute hidden="true" id="JOIN$RuleConditionUuid$RULECONDITIONUUID"/>
       <viewAttribute hidden="true" id="JOIN$DimensionId$DIMENSIONID"/>
     </viewAttributes>
     <calculatedViewAttributes/>
     <input node="CD_RULE_CONDITION">
-      <mapping xsi:type="Calculation:AttributeMapping" target="RULECONDITIONUUID" source="RULECONDITIONUUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RuleConditionUuid" source="RuleConditionUuid"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="RuleId" source="RuleId"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="RULE" source="RULE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Rule" source="Rule"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="EventTypeId" source="EventTypeId"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="EVENTTYPE" source="EVENTTYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EventType" source="EventType"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="SalesOrganizationId" source="SalesOrganizationId"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="SalesOrganization" source="SalesOrganization"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="DistributionChannelId" source="DistributionChannelId"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="DistributionChannel" source="DistributionChannel"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ROUNDINGPROFILEID" source="ROUNDINGPROFILEID"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ROUNDINGPROFILE" source="ROUNDINGPROFILE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="VALIDFROM" source="VALIDFROM"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="VALIDTO" source="VALIDTO"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="ISPERCENTAGE" source="ISPERCENTAGE"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$RULECONDITIONUUID$RULECONDITIONUUID" source="RULECONDITIONUUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RoundingProfileId" source="RoundingProfileId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RoundingProfile" source="RoundingProfile"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ValidFrom" source="ValidFrom"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ValidTo" source="ValidTo"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="IsPercentage" source="IsPercentage"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$RuleConditionUuid$RULECONDITIONUUID" source="RuleConditionUuid"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DimensionId$DIMENSIONID" source="DimensionId"/>
     </input>
     <input node="Join_1_1">
-      <mapping xsi:type="Calculation:AttributeMapping" target="DIMENSIONVALUES" source="DIMENSIONVALUES"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DimensionValues" source="DimensionValues"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="DimensionId" source="DimensionId"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="DIMENSION" source="DIMENSION"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="HASVALUE" source="HASVALUE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Dimension" source="Dimension"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HasValue" source="HasValue"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RULECONDITIONUUID" source="RULECONDITIONUUID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="DIMENSIONID" source="DIMENSIONID"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$RULECONDITIONUUID$RULECONDITIONUUID" source="RULECONDITIONUUID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$RuleConditionUuid$RULECONDITIONUUID" source="RULECONDITIONUUID"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DimensionId$DIMENSIONID" source="DIMENSIONID"/>
     </input>
-    <joinAttribute name="JOIN$RULECONDITIONUUID$RULECONDITIONUUID"/>
+    <joinAttribute name="JOIN$RuleConditionUuid$RULECONDITIONUUID"/>
     <joinAttribute name="JOIN$DimensionId$DIMENSIONID"/>
   </calculationView>
 </calculationViews>
 <logicalModel id="Join_1_2">
   <attributes>
-    <attribute id="RULECONDITIONUUID" order="1" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="RULE CONDITION UUID"/>
-      <keyMapping columnObjectName="Join_1_2" columnName="RULECONDITIONUUID"/>
+    <attribute id="RuleConditionUuid" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Rule Condition Uuid"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="RuleConditionUuid"/>
     </attribute>
     <attribute id="RuleId" order="2" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="RULE ID"/>
+      <descriptions defaultDescription="Rule Id"/>
       <keyMapping columnObjectName="Join_1_2" columnName="RuleId"/>
     </attribute>
-    <attribute id="RULE" order="3" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="DESCRIPTION"/>
-      <keyMapping columnObjectName="Join_1_2" columnName="RULE"/>
+    <attribute id="Rule" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Description"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="Rule"/>
     </attribute>
     <attribute id="EventTypeId" order="4" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="EVENT TYPE ID"/>
+      <descriptions defaultDescription="Event Type Id"/>
       <keyMapping columnObjectName="Join_1_2" columnName="EventTypeId"/>
     </attribute>
-    <attribute id="EVENTTYPE" order="5" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="DESCRIPTION"/>
-      <keyMapping columnObjectName="Join_1_2" columnName="EVENTTYPE"/>
+    <attribute id="EventType" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Description"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="EventType"/>
     </attribute>
     <attribute id="SalesOrganizationId" order="6" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="SALES ORGANIZATION ID"/>
+      <descriptions defaultDescription="Sales Organization ID"/>
       <keyMapping columnObjectName="Join_1_2" columnName="SalesOrganizationId"/>
     </attribute>
     <attribute id="SalesOrganization" order="7" displayAttribute="false" attributeHierarchyActive="false">
@@ -129,53 +135,53 @@
       <keyMapping columnObjectName="Join_1_2" columnName="SalesOrganization"/>
     </attribute>
     <attribute id="DistributionChannelId" order="8" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="DISTRIBUTION CHANNEL ID"/>
+      <descriptions defaultDescription="Distribution Channel ID"/>
       <keyMapping columnObjectName="Join_1_2" columnName="DistributionChannelId"/>
     </attribute>
     <attribute id="DistributionChannel" order="9" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="DistributionChannel"/>
       <keyMapping columnObjectName="Join_1_2" columnName="DistributionChannel"/>
     </attribute>
-    <attribute id="ROUNDINGPROFILEID" order="10" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="ROUNDING PROFILE"/>
-      <keyMapping columnObjectName="Join_1_2" columnName="ROUNDINGPROFILEID"/>
+    <attribute id="RoundingProfileId" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Rounding Profile"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="RoundingProfileId"/>
     </attribute>
-    <attribute id="ROUNDINGPROFILE" order="11" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="VALUE"/>
-      <keyMapping columnObjectName="Join_1_2" columnName="ROUNDINGPROFILE"/>
+    <attribute id="RoundingProfile" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Value"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="RoundingProfile"/>
     </attribute>
-    <attribute id="VALIDFROM" order="12" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="VALIDITY FROM"/>
-      <keyMapping columnObjectName="Join_1_2" columnName="VALIDFROM"/>
+    <attribute id="ValidFrom" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Validity From"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="ValidFrom"/>
     </attribute>
-    <attribute id="VALIDTO" order="13" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="VALIDITY TO"/>
-      <keyMapping columnObjectName="Join_1_2" columnName="VALIDTO"/>
+    <attribute id="ValidTo" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Validity To"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="ValidTo"/>
     </attribute>
     <attribute id="DimensionId" order="14" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="DimensionId"/>
       <keyMapping columnObjectName="Join_1_2" columnName="DimensionId"/>
     </attribute>
-    <attribute id="DIMENSION" order="15" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="DIMENSION"/>
-      <keyMapping columnObjectName="Join_1_2" columnName="DIMENSION"/>
+    <attribute id="Dimension" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Dimension"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="Dimension"/>
     </attribute>
-    <attribute id="DIMENSIONS" order="16" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="Dimensions" order="16" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="DIMENSIONVALUE"/>
-      <keyMapping columnObjectName="Join_1_2" columnName="DIMENSIONVALUES"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="DimensionValues"/>
     </attribute>
   
-    <attribute id="HASVALUE" order="17" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="HAS DIMENSION VALUE"/>
+    <attribute id="HasValue" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Has Dimension Value"/>
   
-      <keyMapping columnObjectName="Join_1_2" columnName="HASVALUE"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="HasValue"/>
   
     </attribute>
   
-    <attribute id="ISPERCENTAGE" order="18" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="IS PERCENTAGE"/>
+    <attribute id="IsPercentage" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Is Percentage"/>
   
-      <keyMapping columnObjectName="Join_1_2" columnName="ISPERCENTAGE"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="IsPercentage"/>
   
     </attribute>
   </attributes>
@@ -192,26 +198,30 @@
       <rectangleSize width="160"/>
     </shape>
   
-    <shape expanded="true" modelObjectName="TABLEFUNCTION_1" modelObjectNameSpace="CalculationView">
+    <shape expanded="true" modelObjectName="TableFunction_1" modelObjectNameSpace="CalculationView">
       <upperLeftCorner x="92" y="357"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92" y="217"/>
+      <upperLeftCorner x="82" y="221"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="CD_RULE_CONDITION" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
       <upperLeftCorner x="20" y="30"/>
       <rectangleSize width="203"/>
     </shape>
-    <shape modelObjectName="TABLEFUNCTION_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+    <shape modelObjectName="TableFunction_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="194"/>
     </shape>
-  
     <shape modelObjectName="PR_DIMENSIONTEXT" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
       <upperLeftCorner x="620" y="30"/>
       <rectangleSize width="250"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="332" y="251"/>
+      <rectangleSize height="30" width="160"/>
     </shape>
   </shapes>
 </layout>

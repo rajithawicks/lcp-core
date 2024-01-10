@@ -1,10 +1,12 @@
-VIEW "MATERIALSALEDATEVIEW"(
-	"MaterialId",
-	"SalesOrganizationId",
-	"DistributionChannelId",
-	"EarliestSaleDate",
-	"LatestSaleDate") AS
+VIEW "V_MATERIALSALEDATEVIEW"(
+
+	"MATERIALID",
+	"SALESORGANIZATIONID",
+	"DISTRIBUTIONCHANNELID",
+	"EARLIESTSALEDATE",
+	"LATESTSALEDATE") AS
 		SELECT 
+
 			"MaterialSaleDate_$0"."MaterialId" AS "MaterialId",
 			"MaterialSaleDate_$0"."SalesOrganizationId" AS "SalesOrganizationId",
 			"MaterialSaleDate_$0"."DistributionChannelId" AS "DistributionChannelId",

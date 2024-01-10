@@ -1,6 +1,6 @@
-VIEW "SALESORGANIZATIONVIEW"(
-	"SalesOrganizationId",
-	"SalesOrganization") AS
+VIEW "V_SALESORGANIZATIONVIEW"(
+	"SALESORGANIZATIONID",
+	"SALESORGANIZATION") AS
 		SELECT DISTINCT 
 			"SalesOrganization_$0"."SalesOrganizationId" AS "SalesOrganizationId",
 			"SalesOrganization_$0"."SalesOrganization" AS "SalesOrganization"

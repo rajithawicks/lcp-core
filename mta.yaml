@@ -19,18 +19,48 @@ modules:
     builder: npm
 - name: service-core-db-deployer
   type: hdb
-  path: db
+  path: gen/db
   requires:
   - name: service-core-db
     properties:
       TARGET_CONTAINER: ~{hdi-container-name}
-  - name: cross-container-service-2
+  - name: cross-container-service-1
     group: SERVICE_REPLACEMENTS
     properties:
       key: ServiceName_1
       service: ~{the-service-name}
   parameters:
     buildpack: nodejs_buildpack
+- name: service-core-destination-content
+  type: com.sap.application.content
+  requires:
+  - name: service-core-destination-service
+    parameters:
+      content-target: true
+  - name: service-core_html_repo_host
+    parameters:
+      service-key:
+        name: service-core_html_repo_host-key
+  - name: service-core-auth
+    parameters:
+      service-key:
+        name: service-core-auth-key
+  parameters:
+    content:
+      instance:
+        destinations:
+        - Name: lcp_core_service_core_html_repo_host
+          ServiceInstanceName: service-core-html5-app-host-service
+          ServiceKeyName: service-core_html_repo_host-key
+          sap.cloud.service: lcp-core
+        - Authentication: OAuth2UserTokenExchange
+          Name: lcp_core_service_core_auth
+          ServiceInstanceName: service-core-auth
+          ServiceKeyName: service-core-auth-key
+          sap.cloud.service: lcp-core
+        existing_destinations_policy: ignore
+  build-parameters:
+    no-source: true
 resources:
 - name: service-core-auth
   type: org.cloudfoundry.managed-service
@@ -48,12 +78,25 @@ resources:
     service-plan: hdi-shared
   properties:
     hdi-container-name: ${service-name}
+- name: service-core-destination-service
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: true
+      version: 1.0.0
+    service: destination
+    service-name: service-core-destination-service
+    service-plan: lite
+- name: service-core_html_repo_host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: service-core-html5-app-host-service
+    service-plan: app-host
 - name: cross-container-service-1
-  type: deleteme
-- name: cross-container-service-2
   type: org.cloudfoundry.existing-service
   parameters:
-    service-name: lcp-car-ups-new
+    service-name: CC_ACCESS3
   properties:
     the-service-name: ${service-name}
 parameters:

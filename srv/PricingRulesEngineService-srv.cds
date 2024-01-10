@@ -12,7 +12,7 @@ service PricingRulesEngineService {
     entity PricingRuleSet             as projection on CV.PricingRuleView;
     entity AccessSequenceSet          as projection on CV.AccessSequenceView;
     entity EventRuleConditionSet      as projection on CV.EventRuleConditionView;
-    entity EventRuleDimensionSet      as projection on CV.EventRuleDimensionView;
+     entity EventRuleDimensionSet      as projection on CV.EventRuleDimensionView;
 
     @readonly
     entity RuleDefinitionSet          as projection on CV.RuleDefinitionView;
@@ -20,9 +20,9 @@ service PricingRulesEngineService {
     @readonly
     entity RuleScreenConfigurationSet as projection on CV.RuleScreenConfigurationView;
 
-    entity RuleConditionSet           as projection on CD_RULE_CONDITION_HIERARCHY;
-    entity MessageTypeMaintenanceSet  as projection on CV.MessageTypeMaintenanceView;
-    entity SystemMessageSet           as projection on CV.SystemMessageView;
+     entity RuleConditionSet           as projection on CD_RULE_CONDITION_HIERARCHY;
+     entity MessageTypeMaintenanceSet  as projection on CV.MessageTypeMaintenanceView;
+     entity SystemMessageSet           as projection on CV.SystemMessageView;
 
     @readonly
     entity DimensionSet               as projection on CV.DimensionView;

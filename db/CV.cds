@@ -57,7 +57,7 @@ context CV {
         where
             PricingRule.PRIORITY <> -1;
 
-    // @title : 'Access Sequence view'
+    @title: 'Access Sequence view'
     view AccessSequenceView as
         select from PR.AccessSequence
         left outer join PR.PricingRule
@@ -100,95 +100,95 @@ context CV {
      * Consumed By:
      * PricingRulesEngine
     */
-    //     @title : 'Rule Condition view'
-    view RuleConditionView as
-        select from PR.RuleCondition
-        left outer join PR.PricingRule
-            on RuleCondition.RULEID = PricingRule.RULEID
-        left outer join PR.RuleText
-            on RuleCondition.RULEID = RuleText.RULEID
-        left outer join PR.EventTypeText
-            on RuleCondition.EVENTTYPEID = EventTypeText.EVENTTYPEID
-        left outer join PR.EventRuleDimension
-            on  RuleCondition.RULECONDITIONUUID = EventRuleDimension.RULECONDITIONUUID
-            and RuleCondition.DIMENSIONID       = EventRuleDimension.DIMENSIONID
-        left outer join PR.DimensionText
-            on EventRuleDimension.DIMENSIONID = DimensionText.DIMENSIONID
-        left outer join PR.EventRuleCondition
-            on RuleCondition.RULECONDITIONUUID = EventRuleCondition.RULECONDITIONUUID
-        left outer join PR.RoundingProfile
-            on RuleCondition.PROFILEID = RoundingProfile.PROFILEID
-        left outer join CD_SALES_ORGANIZATION
-            on RuleCondition.SALESORGANIZATIONID = CD_SALES_ORGANIZATION.SalesOrganizationId
-        left outer join CD_DISTRIBUTION_CHANNEL
-            on RuleCondition.DISTRIBUTIONCHANNELID = CD_DISTRIBUTION_CHANNEL.DistributionChannelId
-        {
-            @title: 'Rule Condition Uuid'
-            RuleCondition.RULECONDITIONUUID             as RuleConditionUuid,
+    // @title: 'Rule Condition view'
+    // view RuleConditionView as
+    //     select from PR.RuleCondition
+    //     left outer join PR.PricingRule
+    //         on RuleCondition.RULEID = PricingRule.RULEID
+    //     left outer join PR.RuleText
+    //         on RuleCondition.RULEID = RuleText.RULEID
+    //     left outer join PR.EventTypeText
+    //         on RuleCondition.EVENTTYPEID = EventTypeText.EVENTTYPEID
+    //     left outer join PR.EventRuleDimension
+    //         on  RuleCondition.RULECONDITIONUUID = EventRuleDimension.RULECONDITIONUUID
+    //         and RuleCondition.DIMENSIONID       = EventRuleDimension.DIMENSIONID
+    //     left outer join PR.DimensionText
+    //         on EventRuleDimension.DIMENSIONID = DimensionText.DIMENSIONID
+    //     left outer join PR.EventRuleCondition
+    //         on RuleCondition.RULECONDITIONUUID = EventRuleCondition.RULECONDITIONUUID
+    //     left outer join PR.RoundingProfile
+    //         on RuleCondition.PROFILEID = RoundingProfile.PROFILEID
+    //     left outer join CD_SALES_ORGANIZATION
+    //         on RuleCondition.SALESORGANIZATIONID = CD_SALES_ORGANIZATION.SalesOrganizationId
+    //     left outer join CD_DISTRIBUTION_CHANNEL
+    //         on RuleCondition.DISTRIBUTIONCHANNELID = CD_DISTRIBUTION_CHANNEL.DistributionChannelId
+    //     {
+    //         @title: 'Rule Condition Uuid'
+    //         RuleCondition.RULECONDITIONUUID             as RuleConditionUuid,
 
-            @title: 'Rule Id'
-            RuleCondition.RULEID                        as RuleId,
+    //         @title: 'Rule Id'
+    //         RuleCondition.RULEID                        as RuleId,
 
-            @title: 'Rule Description'
-            RuleText.DESCRIPTION                        as Rule,
+    //         @title: 'Rule Description'
+    //         RuleText.DESCRIPTION                        as Rule,
 
-            @title: 'Event Type Id'
-            RuleCondition.EVENTTYPEID                   as EventTypeId,
+    //         @title: 'Event Type Id'
+    //         RuleCondition.EVENTTYPEID                   as EventTypeId,
 
-            @title: 'Event Type Description'
-            EventTypeText.DESCRIPTION                   as EventType,
+    //         @title: 'Event Type Description'
+    //         EventTypeText.DESCRIPTION                   as EventType,
 
-            @title: 'Sales Organization ID'
-            RuleCondition.SALESORGANIZATIONID           as SalesOrganizationId,
+    //         @title: 'Sales Organization ID'
+    //         RuleCondition.SALESORGANIZATIONID           as SalesOrganizationId,
 
-            @title: 'Sales Organization'
-            CD_SALES_ORGANIZATION.SalesOrganization     as SalesOrganization,
+    //         @title: 'Sales Organization'
+    //         CD_SALES_ORGANIZATION.SalesOrganization     as SalesOrganization,
 
-            @title: 'Distribution Channel ID'
-            RuleCondition.DISTRIBUTIONCHANNELID         as DistributionChannelId,
+    //         @title: 'Distribution Channel ID'
+    //         RuleCondition.DISTRIBUTIONCHANNELID         as DistributionChannelId,
 
-            @title: 'Distribution Channel'
-            CD_DISTRIBUTION_CHANNEL.DistributionChannel as DistributionChannel,
+    //         @title: 'Distribution Channel'
+    //         CD_DISTRIBUTION_CHANNEL.DistributionChannel as DistributionChannel,
 
-            @title: 'Dimension Id'
-            EventRuleDimension.DIMENSIONID              as DimensionId,
+    //         @title: 'Dimension Id'
+    //         EventRuleDimension.DIMENSIONID              as DimensionId,
 
-            @title: 'Dimension Description'
-            DimensionText.DESCRIPTION                   as Dimension,
+    //         @title: 'Dimension Description'
+    //         DimensionText.DESCRIPTION                   as Dimension,
 
-            @title: 'Has Dimension Value'
-            DimensionText.HASVALUE                      as HasDimensionValue,
+    //         @title: 'Has Dimension Value'
+    //         DimensionText.HASVALUE                      as HasDimensionValue,
 
-            @title: 'Dimension Value'
-            EventRuleDimension.DIMENSIONVALUE           as DimensionValue,
+    //         @title: 'Dimension Value'
+    //         EventRuleDimension.DIMENSIONVALUE           as DimensionValue,
 
-            @title: 'Valid From'
-            RuleCondition.VALIDFROM                     as ValidFrom,
+    //         @title: 'Valid From'
+    //         RuleCondition.VALIDFROM                     as ValidFrom,
 
-            @title: 'Valid To'
-            RuleCondition.VALIDTO                       as ValidTo,
+    //         @title: 'Valid To'
+    //         RuleCondition.VALIDTO                       as ValidTo,
 
-            @title: 'Is Percentage'
-            RuleCondition.ISPERCENTAGE                  as IsPercentage,
+    //         @title: 'Is Percentage'
+    //         RuleCondition.ISPERCENTAGE                  as IsPercentage,
 
-            @title: 'Rounding Profile Id'
-            RoundingProfile.PROFILEID                   as RoundingProfileId,
+    //         @title: 'Rounding Profile Id'
+    //         RoundingProfile.PROFILEID                   as RoundingProfileId,
 
-            @title: 'Rounding Profile Value'
-            RoundingProfile.VALUE                       as RoundingProfile,
+    //         @title: 'Rounding Profile Value'
+    //         RoundingProfile.VALUE                       as RoundingProfile,
 
-            @title: 'Condition From'
-            EventRuleCondition.CONDITIONFROM            as ConditionFrom,
+    //         @title: 'Condition From'
+    //         EventRuleCondition.CONDITIONFROM            as ConditionFrom,
 
-            @title: 'Condition To'
-            EventRuleCondition.CONDITIONTO              as ConditionTo,
+    //         @title: 'Condition To'
+    //         EventRuleCondition.CONDITIONTO              as ConditionTo,
 
-            @title: 'Value'
-            EventRuleCondition.VALUE                    as Value
-        }
-        where
-                CD_SALES_ORGANIZATION.SAPClient   = '100'
-            and CD_DISTRIBUTION_CHANNEL.SAPClient = '100';
+    //         @title: 'Value'
+    //         EventRuleCondition.VALUE                    as Value
+    //     }
+    //     where
+    //             CD_SALES_ORGANIZATION.SAPClient   = '100'
+    //         and CD_DISTRIBUTION_CHANNEL.SAPClient = '100';
 
     @title: 'MessageType Maintenance View'
     view MessageTypeMaintenanceView as
@@ -417,14 +417,14 @@ context CV {
     @title: 'Dimension view'
     view DimensionView as
         select from PR.DimensionText {
-            @title: 'Dimension Id'
-         key   DimensionText.DIMENSIONID as DimensionId,
+                @title: 'Dimension Id'
+            key DimensionText.DIMENSIONID as DimensionId,
 
-            @title: 'Description'
-            DimensionText.DESCRIPTION as Description,
+                @title: 'Description'
+                DimensionText.DESCRIPTION as Description,
 
-            @title: 'Has Dimension Value'
-            DimensionText.HASVALUE    as HasValue
+                @title: 'Has Dimension Value'
+                DimensionText.HASVALUE    as HasValue
         };
 
 };

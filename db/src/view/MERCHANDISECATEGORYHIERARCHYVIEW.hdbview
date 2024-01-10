@@ -1,10 +1,11 @@
-VIEW "MERCHANDISECATEGORYHIERARCHYVIEW"(
-	"MaterialGroupId",
-	"MaterialGroupHierNode2Text",
-	"MaterialGroupHierNode2Name",
-	"MaterialGroupHierNode3Text",
-	"MaterialGroupHierNode3Name") AS
+VIEW "V_MERCHANDISECATEGORYHIERARCHYVIEW"(
+	"MATERIALGROUPID",
+	"MATERIALGROUPHIERNODE2TEXT",
+	"MATERIALGROUPHIERNODE2NAME",
+	"MATERIALGROUPHIERNODE3TEXT",
+	"MATERIALGROUPHIERNODE3NAME") AS
 		SELECT 
+		    
 			"MerchandiseCategoryHierarchy_$0"."MaterialGroupId" AS "MaterialGroupId",
 			"MerchandiseCategoryHierarchy_$0"."MaterialGroupHierNode2Text" AS "MaterialGroupHierNode2Text",
 			"MerchandiseCategoryHierarchy_$0"."MaterialGroupHierNode2Name" AS "MaterialGroupHierNode2Name",

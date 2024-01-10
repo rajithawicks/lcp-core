@@ -1995,7 +1995,7 @@ var SystemMessageSet_onBeforeCreate = async function (req) {
     }, {
         "LanguageKey": {
             //vesta commented till its sorted
-            "EN"//InitialValue: oRuntimeUtility.getDefaultLanguage()
+            InitialValue: "EN"//InitialValue: oRuntimeUtility.getDefaultLanguage()
 		}
     }, {
         "Priority": {
@@ -2094,7 +2094,7 @@ var SystemMessageSet_onBeforeUpdate = async function (req) {
     }, {
         "LanguageKey": {
             //vesta commented till its sorted
-            "EN"//InitialValue: oRuntimeUtility.getDefaultLanguage()
+            InitialValue:  "EN"//InitialValue: oRuntimeUtility.getDefaultLanguage()
 		}
     }, {
         "SystemMessage": {

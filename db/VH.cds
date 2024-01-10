@@ -75,7 +75,7 @@ context VH {
             RoundingProfile.VALUE     as Text
         };
 
-    @title : 'Sales Organization View'
+  @title : 'Sales Organization View'
     view SalesOrganizationView as
         select from CD_SALES_ORGANIZATION
         {

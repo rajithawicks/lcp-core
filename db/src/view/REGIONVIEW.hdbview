@@ -1,6 +1,6 @@
-VIEW "REGIONVIEW"(
-	"RegionId",
-	"Region") AS
+VIEW "V_REGIONVIEW"(
+	"REGIONID",
+	"REGION") AS
 		SELECT DISTINCT 
 			"Region_$0"."RegionId" AS "RegionId",
 			"Region_$0"."Region" AS "Region"

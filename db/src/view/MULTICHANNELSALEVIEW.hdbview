@@ -1,15 +1,15 @@
-VIEW "MULTICHANNELSALEVIEW"(
-	"ProductId",
-	"LocationId",
-	"BaseUnitOfMeasureId",
-	"FourWeekSalesQuantityInBaseUnit",
-	"FourWeekSalesQuantityInSalesUnit",
-	"SalesQuantityInBaseUnit",
-	"SalesQuantityInSalesUnit",
-	"FourWeekNetSalesAmount",
-	"NetSalesAmount",
-	"GrossMargin",
-	"GrossMarginPercent") AS
+VIEW "V_MULTICHANNELSALEVIEW"(
+	"PRODUCTID",
+	"LOCATIONID",
+	"BASEUNITOFMEASUREID",
+	"FOURWEEKSALESQUANTITYINBASEUNIT",
+	"FOURWEEKSALESQUANTITYINSALESUNIT",
+	"SALESQUANTITYINBASEUNIT",
+	"SALESQUANTITYINSALESUNIT",
+	"FOURWEEKNETSALESAMOUNT",
+	"NETSALESAMOUNT",
+	"GROSSMARGIN",
+	"GROSSMARGINPERCENT") AS
 		SELECT 
 			"MultiChannelSale_$0"."ProductId" AS "ProductId",
 			"MultiChannelSale_$0"."LocationId" AS "LocationId",

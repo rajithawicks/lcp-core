@@ -11,7 +11,7 @@
 <snapshotProcedures/>
 <calculationViews/>
 <logicalModel id="DistributionChannel" filterExpressionLanguage="COLUMN_ENGINE">
-<attributes>
+  <attributes>
     <attribute id="SAPClient" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="SAPClient"/>
       <keyMapping columnObjectName="DistributionChannel" columnName="SAPClient"/>

@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CD_LOCATION_HIERARCHY" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CD_LOCATION_HIERARCHY" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true">
 <descriptions defaultDescription="CD_LOCATION_HIERARCHY"/>
 <localVariables/>
 <variableMappings/>
@@ -7,6 +8,7 @@
     <resourceUri>RetailLocationHierarchyNode</resourceUri>
   </DataSource>
 </dataSources>
+<snapshotProcedures/>
 <calculationViews/>
 <logicalModel id="RetailLocationHierarchyNode" filterExpressionLanguage="COLUMN_ENGINE">
   <attributes>
@@ -25,7 +27,9 @@
   
     <attribute id="LocationId" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="LocationId"/>
+  
       <keyMapping columnObjectName="RetailLocationHierarchyNode" columnName="LocationId"/>
+  
     </attribute>
   </attributes>
   <calculatedAttributes/>

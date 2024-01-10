@@ -1,11 +1,11 @@
-VIEW "RETAILPRICEVIEW"(
-	"MaterialId",
-	"PlantId",
-	"SalesOrganizationId",
-	"DistributionChannelId",
-	"RetailPrice",
-	"CurrencyKey",
-	"UnitOfMeasureId") AS
+VIEW "V_RETAILPRICEVIEW"(
+	"MATERIALID",
+	"PLANTID",
+	"SALESORGANIZATIONID",
+	"DISTRIBUTIONCHANNELID",
+	"RETAILPRICE",
+	"CURRENCYKEY",
+	"UNITOFMEASUREID") AS
 		SELECT 
 			"RetailPrice_$0"."MaterialId" AS "MaterialId",
 			"RetailPrice_$0"."PlantId" AS "PlantId",
